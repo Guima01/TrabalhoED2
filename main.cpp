@@ -5,6 +5,8 @@
 #include <cstdlib>
 #include <chrono>
 #include <vector>
+#include <cstring>
+#include <typeinfo>
 #include "Registro.h"
 
 using namespace std;
@@ -20,6 +22,60 @@ vector<string> split (const string &s, char delim) {
     }
 
     return result;
+}
+
+int particao(vector<Registro>&registrosOrdenados, int menorIndice, int maiorIndice)
+{
+
+
+    Registro pivo = registrosOrdenados[maiorIndice];
+    int i = (menorIndice-1 );
+
+
+    for(int j = menorIndice; j < maiorIndice; j++)
+    {
+
+        if(strcmp(registrosOrdenados[j].getState().c_str(), pivo.getState().c_str()) == -1)
+        {
+            i++;
+            swap(registrosOrdenados[i],registrosOrdenados[j]);
+        }
+        else if(strcmp(registrosOrdenados[j].getState().c_str(), pivo.getState().c_str()) == 0){
+
+            if(strcmp(registrosOrdenados[j].getName().c_str(), pivo.getName().c_str()) == -1){
+                i++;
+                swap(registrosOrdenados[i],registrosOrdenados[j]);
+            }
+            else if(strcmp(registrosOrdenados[j].getName().c_str(), pivo.getName().c_str()) == 0){
+
+                if(strcmp(registrosOrdenados[j].getDate().c_str(), pivo.getDate().c_str()) == -1)
+                i++;
+                swap(registrosOrdenados[i],registrosOrdenados[j]);
+            }
+        }
+
+    }
+    swap(registrosOrdenados[i+1],registrosOrdenados[maiorIndice]);
+
+    return i+1;
+
+}
+
+void quickSort(vector<Registro>&registrosOrdenados, int menorIndice, int maiorIndice)
+{
+
+
+
+    if(menorIndice<maiorIndice)
+    {
+
+        int pi = particao(registrosOrdenados,menorIndice,maiorIndice);
+
+
+        quickSort(registrosOrdenados,menorIndice,pi-1);
+        quickSort(registrosOrdenados,pi+1,maiorIndice);
+    }
+
 }
 
 void leArquivoTextoGeral(ifstream& arq)
@@ -47,12 +103,14 @@ void leArquivoTextoGeral(ifstream& arq)
                 registra->setCases(cases);
                 registra->setDeaths(deaths);
 
-
                 registros.push_back(*registra);
             }
         }
+        quickSort(registros, 0, registros.size() - 1);
+        for(int i = 0; i < registros.size(); i++){
+            cout<<registros[i].getName()<<endl;
+        }
     }
-    
     else
         cerr << "ERRO: O arquivo nao pode ser aberto!" << endl;
     
