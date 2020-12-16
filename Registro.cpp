@@ -7,15 +7,14 @@
 
 using namespace std;
 
-Registro::Registro(string date, string state, string name, string code, int cases, int deaths){
+Registro::Registro(){
 
-    this->date = date;
-    this->state = state;
-    this->name = name;
-    this->code = code;
-    this->cases = cases;
-    this->deaths = deaths;
-
+    this->date;
+    this->state;
+    this->name;
+    this->code;
+    this->cases;
+    this->deaths;
 }
 
 Registro::~Registro(){}
@@ -64,6 +63,6 @@ void Registro::setCases(int cases){
     this->cases = cases;
 }
 
-void Registro::getDeaths(int deaths){
+void Registro::setDeaths(int deaths){
     this->deaths = deaths;
 }

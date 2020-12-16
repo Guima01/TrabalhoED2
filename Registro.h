@@ -15,6 +15,8 @@ class Registro {
 
     public:
 
+    Registro();
+    ~Registro();
     void setDate(string date);
     void setState(string state);
     void setName(string name);
@@ -29,4 +31,4 @@ class Registro {
     int getCases();
     int getDeaths();
 
-}
+};
