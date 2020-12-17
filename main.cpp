@@ -48,9 +48,10 @@ int particao(vector<Registro>&registrosOrdenados, int menorIndice, int maiorIndi
             }
             else if(strcmp(registrosOrdenados[j].getName().c_str(), pivo.getName().c_str()) == 0){
 
-                if(strcmp(registrosOrdenados[j].getDate().c_str(), pivo.getDate().c_str()) == -1)
+                if(strcmp(registrosOrdenados[j].getDate().c_str(), pivo.getDate().c_str()) == -1){
                 i++;
                 swap(registrosOrdenados[i],registrosOrdenados[j]);
+                }
             }
         }
 
