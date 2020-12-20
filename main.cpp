@@ -118,6 +118,29 @@ void leArquivoTextoGeral(ifstream& arq)
     
 }
 
+void p_RemoveAccent(string& str)
+{
+  string accent_chars = "ÁÀÃÂÇáàãâçÉÊéêÍíÑÓÔÕñóôõÚÜúü";
+  string unnacent_chars = "AAAAAAAACCaaaaaaaaccEEEEeeeeIIiiNNOOOOOOnnooooooUUUUuuuu";
+  for(int j=0; str[j] != *"\0"; j++){
+    for(int i = 0; i < accent_chars.size(); i = i + 1){
+        if(str[j] == accent_chars[i]){
+            if(str[j + 1] == accent_chars[i + 1]){
+            str[j] = unnacent_chars[i];
+            if(str[j] == *"\0"){
+                break;
+            }
+            str.erase(str.begin()+j+1);
+            break;
+            }
+            else{
+                i++;
+            }
+        }
+    }
+  }
+}
+
 int main(int argc, char const *argv[]){
 
     ifstream arq;
