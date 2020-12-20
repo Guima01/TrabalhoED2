@@ -73,52 +73,7 @@ void quickSort(vector<Registro>&registrosOrdenados, int menorIndice, int maiorIn
     }
 }
 
-void leArquivoTextoGeral(ifstream& arq)
-{
-
-    vector<Registro> registros;
-    if(arq.is_open())
-    {
-        string str;
-        int cases, deaths;
-
-        for(int i = 0; getline(arq,str); i++)
-        {
-            if(i)
-            {
-                Registro *registra = new Registro();
-
-                vector<string> stringDados = split(str,',');
-
-                cases = atoi(stringDados[4].c_str());
-                deaths = atoi(stringDados[5].c_str());
-
-                registra->setDate(stringDados[0]);
-                registra->setState(stringDados[1]);
-                registra->setName(stringDados[2]);
-                registra->setCode(stringDados[3]);
-                registra->setCases(cases);
-                registra->setDeaths(deaths);
-
-                registros.push_back(*registra);
-            }
-        }
-        quickSort(registros, 0, 500 );
-
-        cout<<endl<<endl<<endl;
-
-        for(int i = 0; i < 499; i++)
-        {
-            cout << i << " " << registros[i].getDate() << " " << registros[i].getState();
-            cout << " " << registros[i].getName() << endl;      
-        }
-    }
-    else
-        cerr << "ERRO: O arquivo nao pode ser aberto!" << endl;
-    
-}
-
-void p_RemoveAccent(string& str)
+void removeAccents(string& str)
 {
   string accent_chars = "ÁÀÃÂÇáàãâçÉÊéêÍíÑÓÔÕñóôõÚÜúü";
   string unnacent_chars = "AAAAAAAACCaaaaaaaaccEEEEeeeeIIiiNNOOOOOOnnooooooUUUUuuuu";
@@ -139,6 +94,55 @@ void p_RemoveAccent(string& str)
         }
     }
   }
+}
+
+void leArquivoTextoGeral(ifstream& arq)
+{
+
+    vector<Registro> registros;
+    if(arq.is_open())
+    {
+        string str;
+        int cases, deaths;
+
+        for(int i = 0; getline(arq,str); i++)
+        {
+            if(i != 0)
+            {
+                Registro *registra = new Registro();
+
+                vector<string> stringDados = split(str,',');
+
+                cases = atoi(stringDados[4].c_str());
+                deaths = atoi(stringDados[5].c_str());
+
+                registra->setDate(stringDados[0]);
+                registra->setState(stringDados[1]);
+                removeAccents(stringDados[2]);
+                registra->setName(stringDados[2]);
+                registra->setCode(stringDados[3]);
+                registra->setCases(cases);
+                registra->setDeaths(deaths);
+
+                registros.push_back(*registra);
+                if(i == 1000){
+                    break;
+                }
+            }
+        }
+        quickSort(registros, 0, registros.size()-1);
+
+        cout<<endl<<endl<<endl;
+
+        for(int i = 0; i < registros.size(); i++)
+        {
+            cout << i << " " << registros[i].getDate() << " " << registros[i].getState();
+            cout << " " << registros[i].getName() << endl;      
+        }
+    }
+    else
+        cerr << "ERRO: O arquivo nao pode ser aberto!" << endl;
+    
 }
 
 int main(int argc, char const *argv[]){
