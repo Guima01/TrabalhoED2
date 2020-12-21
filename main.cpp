@@ -6,6 +6,7 @@
 #include <chrono>
 #include <vector>
 #include <cstring>
+#include <algorithm>
 #include <typeinfo>
 #include "Registro.h"
 
@@ -271,12 +272,13 @@ void leArquivoTextoGeral(ifstream &arq)
                 registra->setDeaths(deaths);
 
                 registros.push_back(*registra);
-                if (i == 10000)
+                if (i == 100000)
                 {
                     break;
                 }
             }
         }
+        //random_shuffle(registros.begin(),registros.end());
         //quickSort(registros, 0, registros.size() - 1);
         //insertionSort(registros);
         //mergeSort(registros,0,registros.size() - 1);
