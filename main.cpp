@@ -272,7 +272,7 @@ void leArquivoTextoGeral(ifstream &arq)
                 registra->setDeaths(deaths);
 
                 registros.push_back(*registra);
-                if (i == 100000)
+                if (i == 10000)
                 {
                     break;
                 }
