@@ -26,6 +26,52 @@ vector<string> split(const string &s, char delim)
     return result;
 }
 
+int comparaStrings(string elementoAtual, string elementoPivo){
+    int i = 0;
+    int j = 0;
+    char aux;
+    while( true ){
+        if(elementoAtual[j] != elementoPivo[i]){
+            if(elementoAtual[j] == ' ')
+                j++;
+            if(elementoPivo[i] == ' ')
+                i++;
+            
+            if(elementoAtual[j]>='A' && elementoAtual[j]<='Z'){
+                if(elementoPivo[i]>='a' && elementoPivo[i]<='z')
+                    aux = elementoPivo[i] + 'A' - 'a';
+                else
+                    aux = elementoPivo[i];
+            }
+            else{
+                if(elementoPivo[i]>='A' && elementoPivo[i]<='Z')
+                    aux = elementoPivo[i] - 'A' + 'a' ;
+                else
+                    aux = elementoPivo[i];
+            }
+
+            if(elementoAtual[j] != aux){
+                if(elementoAtual[j] < aux)
+                    return -1;
+                else
+                    return 1;
+            }
+        }
+        i++;
+        j++;
+
+        if(i == elementoAtual.length() && j != elementoPivo.length())
+            return -1;
+
+        if( i != elementoAtual.length() && j == elementoPivo.length())
+            return 1;
+
+        if(i == elementoAtual.length() && j == elementoPivo.length())
+            return 0;
+
+    }
+}
+
 int particao(vector<Registro> &registrosOrdenados, int menorIndice, int maiorIndice)
 {
 
@@ -41,12 +87,12 @@ int particao(vector<Registro> &registrosOrdenados, int menorIndice, int maiorInd
         }
         else if (!strcmp(registrosOrdenados[j].getState().c_str(), pivo.getState().c_str()))
         {
-            if (strcmp(registrosOrdenados[j].getName().c_str(), pivo.getName().c_str()) <= -1)
+            if (comparaStrings(registrosOrdenados[j].getName(), pivo.getName()) <= -1)
             {
                 i++;
                 swap(registrosOrdenados[i], registrosOrdenados[j]);
             }
-            else if (!strcmp(registrosOrdenados[j].getName().c_str(), pivo.getName().c_str()))
+            else if (!comparaStrings(registrosOrdenados[j].getName(), pivo.getName()))
             {
                 if (strcmp(registrosOrdenados[j].getDate().c_str(), pivo.getDate().c_str()) <= -1)
                 {
@@ -60,6 +106,7 @@ int particao(vector<Registro> &registrosOrdenados, int menorIndice, int maiorInd
 
     return i + 1;
 }
+
 
 void quickSort(vector<Registro> &registrosOrdenados, int menorIndice, int maiorIndice)
 {
@@ -240,6 +287,9 @@ void removeAccents(string &str)
                 }
             }
         }
+        if( str[j] == ' ' && (str[j+1] >= 'a' && str[j+1]<='z')){
+            str[j+1] = str[j+1] + 'A'- 'a';
+        }
     }
 }
 
@@ -272,14 +322,15 @@ void leArquivoTextoGeral(ifstream &arq)
                 registra->setDeaths(deaths);
 
                 registros.push_back(*registra);
-                if (i == 10000)
-                {
+                
+                if(i == 10000){
                     break;
                 }
+
             }
         }
         //random_shuffle(registros.begin(),registros.end());
-        //quickSort(registros, 0, registros.size() - 1);
+        quickSort(registros, 0, registros.size()-1);
         //insertionSort(registros);
         //mergeSort(registros,0,registros.size() - 1);
 
@@ -303,6 +354,12 @@ int main(int argc, char const *argv[])
     ifstream arq;
     arq.open(argv[1], ios::in);
     leArquivoTextoGeral(arq);
+
+    // string b = "Sao Jose do Sul";
+    // string a = "Sao Jose dos Ausentes";
+
+    // cout << comparaStrings(a,b) << endl;
+    // cout << strcmp(a.c_str(),b.c_str()) << endl;
 
     return 0;
 }
