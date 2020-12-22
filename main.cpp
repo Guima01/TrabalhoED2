@@ -107,7 +107,6 @@ int particao(vector<Registro> &registrosOrdenados, int menorIndice, int maiorInd
     return i + 1;
 }
 
-
 void quickSort(vector<Registro> &registrosOrdenados, int menorIndice, int maiorIndice)
 {
     if (menorIndice < maiorIndice)
@@ -293,9 +292,8 @@ void removeAccents(string &str)
     }
 }
 
-int validaComparacao(Registro candidato, Registro pivo)
+bool validaComparacao(Registro candidato, Registro pivo)
 {
-
     if (strcmp(candidato.getState().c_str(), pivo.getState().c_str()) <= 0)
     {
         if ( !strcmp( candidato.getState().c_str(), pivo.getState().c_str() ) )
@@ -306,30 +304,28 @@ int validaComparacao(Registro candidato, Registro pivo)
                 {
                     if (strcmp(candidato.getDate().c_str(), pivo.getDate().c_str()) <= -1)
                     {
-                        return 1;
+                        return true;
                     }
                 }
             }
             else
             {
-                return 1;
+                return true;
             }
         }
         else
         {
-            return 1;
+            return true;
         }
     }
-    return 0;
-
+    return false;
 }
 
-
-
-void quicksortBala(vector<Registro> &registrosOrdenados,int inicio, int fim)
+void quickSortMedio(vector<Registro> &registrosOrdenados,int inicio, int fim)
 {    
     int i = inicio;
     int j = fim - 1;
+    
     Registro pivo = registrosOrdenados[ (inicio+fim)/2 ];
 
     while(i<=j)
@@ -350,16 +346,116 @@ void quicksortBala(vector<Registro> &registrosOrdenados,int inicio, int fim)
         }
     }
     if(j > inicio){
-        quicksortBala(registrosOrdenados,inicio,j+1);
+        quickSortMedio(registrosOrdenados,inicio,j+1);
     }
     if(i < fim){
-        quicksortBala(registrosOrdenados,i,fim);
+        quickSortMedio(registrosOrdenados,i,fim);
     }
+}
+
+Registro menorElemento(Registro candidatoInicio, Registro candidatoFim)
+{
+    if( strcmp( candidatoInicio.getState().c_str(), candidatoFim.getState().c_str() ) <= 0 )
+    {
+        if( !strcmp( candidatoInicio.getState().c_str(), candidatoFim.getState().c_str() ) )
+        {
+            if( comparaStrings( candidatoInicio.getName(), candidatoFim.getName() ) <= 0 )
+            {
+                if( !comparaStrings( candidatoInicio.getName(), candidatoFim.getName() ) )
+                {
+                    if( strcmp( candidatoInicio.getDate().c_str(), candidatoFim.getDate().c_str() ) < 0)
+                    {
+                        return candidatoInicio;
+                    }
+                }
+                else
+                {
+                    return candidatoInicio;
+                }
+            }
+            else
+            {
+                return candidatoFim;
+            } 
+        }
+        else
+        {
+            return candidatoInicio;
+        }
+    }
+    
+    return candidatoFim;
+}
+
+Registro maiorElemento(Registro candidatoInicio, Registro candidatoFim)
+{
+    if( strcmp( candidatoInicio.getState().c_str(), candidatoFim.getState().c_str() ) <= 0 )
+    {
+        if( !strcmp( candidatoInicio.getState().c_str(), candidatoFim.getState().c_str() ) )
+        {
+            if( comparaStrings( candidatoInicio.getName(), candidatoFim.getName() ) <= 0 )
+            {
+                if( !comparaStrings( candidatoInicio.getName(), candidatoFim.getName() ) )
+                {
+                    if( strcmp( candidatoInicio.getDate().c_str(), candidatoFim.getDate().c_str() ) < 0)
+                    {
+                        return candidatoFim;
+                    }
+                }
+                else
+                {
+                    return candidatoFim;
+                }
+            }
+            else
+            {
+                return candidatoInicio;
+            } 
+        }
+        else
+        {
+            return candidatoFim;
+        }
+    }
+    
+    return candidatoInicio;
+}
+
+void quickSortMediana(vector<Registro> &registrosOrdenados,int inicio, int fim)
+{
+    int i = inicio;
+    int j = fim - 1;
+    
+    Registro pivo = maiorElemento( registrosOrdenados[inicio], registrosOrdenados[fim - 1] );
+    pivo = menorElemento( pivo, registrosOrdenados[ (inicio+fim) / 2 ] );
+
+    while(i<=j)
+    {
+        while(validaComparacao(registrosOrdenados[i],pivo) && i<fim)
+        {
+            i++;
+        }
+        while(validaComparacao(pivo,registrosOrdenados[j]) && j>inicio)
+        {
+            j--;
+        }
+
+        if(i<=j){
+            swap(registrosOrdenados[i], registrosOrdenados[j]);
+            i++;
+            j--;
+        }
+    }
+    if(j > inicio){
+        quickSortMediana(registrosOrdenados,inicio,j+1);
+    }
+    if(i < fim){
+        quickSortMediana(registrosOrdenados,i,fim);
+    }   
 }
 
 void leArquivoTextoGeral(ifstream &arq)
 {
-
     vector<Registro> registros;
     if (arq.is_open())
     {
@@ -386,31 +482,34 @@ void leArquivoTextoGeral(ifstream &arq)
                 registra->setDeaths(deaths);
 
                 registros.push_back(*registra);
-                
-                if( i== 100000){
-                    break;
-                }
-
-
-
 
             }
         }
+
+        clock_t timeStart, timeStop;
+        timeStart = clock();
+
         //random_shuffle(registros.begin(),registros.end());
+
         //quickSort(registros, 0, registros.size()-1);
-        quicksortBala(registros, 0, registros.size());
+        quickSortMedio(registros, 0, registros.size());
+        //quickSortMediana(registros, 0, registros.size());
+
         //insertionSort(registros);
         //mergeSort(registros,0,registros.size() - 1);
 
-        cout << endl
-             << endl
-             << endl;
+        timeStop = clock();
+        cout << "Tempo Gasto: " << ((double)(timeStop - timeStart) / CLOCKS_PER_SEC) << endl;
 
-        for (int i = 0; i < registros.size(); i++)
-        {
-            cout << i << " " << registros[i].getDate() << " " << registros[i].getState();
-            cout << " " << registros[i].getName() << endl;
-        }
+        // cout << endl
+        //      << endl
+        //      << endl;
+
+        // for (int i = 0; i < registros.size(); i++)
+        // {
+        //     cout << i << " " << registros[i].getDate() << " " << registros[i].getState();
+        //     cout << " " << registros[i].getName() << endl;
+        // }
     }
     else
         cerr << "ERRO: O arquivo nao pode ser aberto!" << endl;
