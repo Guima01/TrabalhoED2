@@ -293,6 +293,70 @@ void removeAccents(string &str)
     }
 }
 
+int validaComparacao(Registro candidato, Registro pivo)
+{
+
+    if (strcmp(candidato.getState().c_str(), pivo.getState().c_str()) <= 0)
+    {
+        if ( !strcmp( candidato.getState().c_str(), pivo.getState().c_str() ) )
+        {
+            if(comparaStrings(candidato.getName(), pivo.getName()) >= 0)
+            {
+                if(( !comparaStrings(candidato.getName(), pivo.getName()) ))
+                {
+                    if (strcmp(candidato.getDate().c_str(), pivo.getDate().c_str()) <= -1)
+                    {
+                        return 1;
+                    }
+                }
+            }
+            else
+            {
+                return 1;
+            }
+        }
+        else
+        {
+            return 1;
+        }
+    }
+    return 0;
+
+}
+
+
+
+void quicksortBala(vector<Registro> &registrosOrdenados,int inicio, int fim)
+{    
+    int i = inicio;
+    int j = fim - 1;
+    Registro pivo = registrosOrdenados[ (inicio+fim)/2 ];
+
+    while(i<=j)
+    {
+        while(validaComparacao(registrosOrdenados[i],pivo) && i<fim)
+        {
+            i++;
+        }
+        while(validaComparacao(pivo,registrosOrdenados[j]) && j>inicio)
+        {
+            j--;
+        }
+
+        if(i<=j){
+            swap(registrosOrdenados[i], registrosOrdenados[j]);
+            i++;
+            j--;
+        }
+    }
+    if(j > inicio){
+        quicksortBala(registrosOrdenados,inicio,j+1);
+    }
+    if(i < fim){
+        quicksortBala(registrosOrdenados,i,fim);
+    }
+}
+
 void leArquivoTextoGeral(ifstream &arq)
 {
 
@@ -323,14 +387,18 @@ void leArquivoTextoGeral(ifstream &arq)
 
                 registros.push_back(*registra);
                 
-                if(i == 10000){
+                if( i== 100000){
                     break;
                 }
+
+
+
 
             }
         }
         //random_shuffle(registros.begin(),registros.end());
-        quickSort(registros, 0, registros.size()-1);
+        //quickSort(registros, 0, registros.size()-1);
+        quicksortBala(registros, 0, registros.size());
         //insertionSort(registros);
         //mergeSort(registros,0,registros.size() - 1);
 
@@ -354,12 +422,6 @@ int main(int argc, char const *argv[])
     ifstream arq;
     arq.open(argv[1], ios::in);
     leArquivoTextoGeral(arq);
-
-    // string b = "Sao Jose do Sul";
-    // string a = "Sao Jose dos Ausentes";
-
-    // cout << comparaStrings(a,b) << endl;
-    // cout << strcmp(a.c_str(),b.c_str()) << endl;
 
     return 0;
 }
