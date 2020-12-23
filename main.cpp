@@ -353,7 +353,7 @@ void quickSortMedio(vector<Registro> &registrosOrdenados,int inicio, int fim)
     }
 }
 
-Registro menorElemento(Registro candidatoInicio, Registro candidatoFim)
+bool menorElemento(Registro candidatoInicio, Registro candidatoFim)
 {
     if( strcmp( candidatoInicio.getState().c_str(), candidatoFim.getState().c_str() ) <= 0 )
     {
@@ -365,69 +365,72 @@ Registro menorElemento(Registro candidatoInicio, Registro candidatoFim)
                 {
                     if( strcmp( candidatoInicio.getDate().c_str(), candidatoFim.getDate().c_str() ) < 0)
                     {
-                        return candidatoInicio;
+                        return true;
                     }
                 }
                 else
                 {
-                    return candidatoInicio;
+                    return true;
                 }
             }
             else
             {
-                return candidatoFim;
+                return false;
             } 
         }
         else
         {
-            return candidatoInicio;
+            return true;
         }
     }
     
-    return candidatoFim;
+    return false;
 }
 
-Registro maiorElemento(Registro candidatoInicio, Registro candidatoFim)
-{
-    if( strcmp( candidatoInicio.getState().c_str(), candidatoFim.getState().c_str() ) <= 0 )
-    {
-        if( !strcmp( candidatoInicio.getState().c_str(), candidatoFim.getState().c_str() ) )
-        {
-            if( comparaStrings( candidatoInicio.getName(), candidatoFim.getName() ) <= 0 )
-            {
-                if( !comparaStrings( candidatoInicio.getName(), candidatoFim.getName() ) )
-                {
-                    if( strcmp( candidatoInicio.getDate().c_str(), candidatoFim.getDate().c_str() ) < 0)
-                    {
-                        return candidatoFim;
-                    }
-                }
-                else
-                {
-                    return candidatoFim;
-                }
-            }
-            else
-            {
-                return candidatoInicio;
-            } 
-        }
-        else
-        {
-            return candidatoFim;
-        }
-    }
-    
-    return candidatoInicio;
-}
 
 void quickSortMediana(vector<Registro> &registrosOrdenados,int inicio, int fim)
 {
     int i = inicio;
     int j = fim - 1;
     
-    Registro pivo = maiorElemento( registrosOrdenados[inicio], registrosOrdenados[fim - 1] );
-    pivo = menorElemento( pivo, registrosOrdenados[ (inicio+fim) / 2 ] );
+    Registro pivo;
+
+    if( menorElemento( registrosOrdenados[inicio], registrosOrdenados[(inicio + fim ) / 2 ] ) )
+    {
+        if( menorElemento( registrosOrdenados[(inicio+fim) / 2 ], registrosOrdenados[ j ] ))
+        {
+            pivo = registrosOrdenados[(inicio+fim) / 2 ];
+        }
+        else
+        {
+            if( menorElemento(registrosOrdenados[inicio],registrosOrdenados[j]))
+            {
+                pivo = registrosOrdenados[j];
+            }
+            else
+            {
+                pivo = registrosOrdenados[inicio];
+            }
+        }
+    }
+    else
+    {
+        if( menorElemento(registrosOrdenados[j],registrosOrdenados[ (inicio+fim) / 2] ) )
+        {
+            pivo = registrosOrdenados[(inicio+fim) / 2 ];
+        }
+        else
+        {
+            if( menorElemento( registrosOrdenados[j], registrosOrdenados[inicio]))
+            {
+                pivo = registrosOrdenados[ j ];
+            }
+            else
+            {
+                pivo = registrosOrdenados[ inicio ];
+            }
+        }
+    }
 
     while(i<=j)
     {
@@ -483,6 +486,7 @@ void leArquivoTextoGeral(ifstream &arq)
 
                 registros.push_back(*registra);
 
+
             }
         }
 
@@ -492,8 +496,8 @@ void leArquivoTextoGeral(ifstream &arq)
         //random_shuffle(registros.begin(),registros.end());
 
         //quickSort(registros, 0, registros.size()-1);
-        quickSortMedio(registros, 0, registros.size());
-        //quickSortMediana(registros, 0, registros.size());
+        //quickSortMedio(registros, 0, registros.size());
+        quickSortMediana(registros, 0, registros.size());
 
         //insertionSort(registros);
         //mergeSort(registros,0,registros.size() - 1);
@@ -501,15 +505,15 @@ void leArquivoTextoGeral(ifstream &arq)
         timeStop = clock();
         cout << "Tempo Gasto: " << ((double)(timeStop - timeStart) / CLOCKS_PER_SEC) << endl;
 
-        // cout << endl
-        //      << endl
-        //      << endl;
+        cout << endl
+             << endl
+             << endl;
 
-        // for (int i = 0; i < registros.size(); i++)
-        // {
-        //     cout << i << " " << registros[i].getDate() << " " << registros[i].getState();
-        //     cout << " " << registros[i].getName() << endl;
-        // }
+        for (int i = 0; i < registros.size(); i++)
+        {
+            cout << i << " " << registros[i].getDate() << " " << registros[i].getState();
+            cout << " " << registros[i].getName() << endl;
+        }
     }
     else
         cerr << "ERRO: O arquivo nao pode ser aberto!" << endl;
