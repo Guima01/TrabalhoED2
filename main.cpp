@@ -457,8 +457,21 @@ void quickSortMediana(vector<Registro> &registrosOrdenados,int inicio, int fim)
     }   
 }
 
+void salvarArquivo(ofstream &arq, vector<Registro>registros){
+    arq << "date,state,name,code,cases,deaths"<<endl;
+    for(int i=0; i < registros.size(); i++){
+        arq << registros[i].getDate()<<",";
+        arq << registros[i].getState()<<",";
+        arq << registros[i].getName()<<",";
+        arq << registros[i].getCode()<<",";
+        arq << registros[i].getCases()<<",";
+        arq << registros[i].getDeaths()<<endl;
+    }
+}
+
 void leArquivoTextoGeral(ifstream &arq)
 {
+    ofstream saida("brazil_covid19_cities_processado.csv");
     vector<Registro> registros;
     if (arq.is_open())
     {
@@ -486,7 +499,6 @@ void leArquivoTextoGeral(ifstream &arq)
 
                 registros.push_back(*registra);
 
-
             }
         }
 
@@ -509,15 +521,17 @@ void leArquivoTextoGeral(ifstream &arq)
              << endl
              << endl;
 
-        for (int i = 0; i < registros.size(); i++)
+        /*for (int i = 0; i < registros.size(); i++)
         {
             cout << i << " " << registros[i].getDate() << " " << registros[i].getState();
             cout << " " << registros[i].getName() << endl;
-        }
+        }*/
+        salvarArquivo(saida, registros);
     }
     else
         cerr << "ERRO: O arquivo nao pode ser aberto!" << endl;
 }
+
 
 int main(int argc, char const *argv[])
 {
