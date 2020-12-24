@@ -458,8 +458,17 @@ void quickSortMediana(vector<Registro> &registrosOrdenados,int inicio, int fim)
 }
 
 void salvarArquivo(ofstream &arq, vector<Registro>registros){
+    int cases = 10000;
     arq << "date,state,name,code,cases,deaths"<<endl;
     for(int i=0; i < registros.size(); i++){
+        if(registros[i].getDate() == "2020-03-27"){
+            cases = registros[i].getCases();
+        }
+        else{
+            int aux = cases;
+            cases = registros[i].getCases();
+            registros[i].setCases(registros[i].getCases() - aux); 
+        }
         arq << registros[i].getDate()<<",";
         arq << registros[i].getState()<<",";
         arq << registros[i].getName()<<",";
