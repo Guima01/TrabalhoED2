@@ -72,194 +72,6 @@ int comparaStrings(string elementoAtual, string elementoPivo){
     }
 }
 
-int particao(vector<Registro> &registrosOrdenados, int menorIndice, int maiorIndice)
-{
-
-    Registro pivo = registrosOrdenados[maiorIndice];
-    int i = menorIndice - 1;
-
-    for (int j = menorIndice; j < maiorIndice; j++)
-    {
-        if (strcmp(registrosOrdenados[j].getState().c_str(), pivo.getState().c_str()) <= -1)
-        {
-            i++;
-            swap(registrosOrdenados[i], registrosOrdenados[j]);
-        }
-        else if (!strcmp(registrosOrdenados[j].getState().c_str(), pivo.getState().c_str()))
-        {
-            if (comparaStrings(registrosOrdenados[j].getName(), pivo.getName()) <= -1)
-            {
-                i++;
-                swap(registrosOrdenados[i], registrosOrdenados[j]);
-            }
-            else if (!comparaStrings(registrosOrdenados[j].getName(), pivo.getName()))
-            {
-                if (strcmp(registrosOrdenados[j].getDate().c_str(), pivo.getDate().c_str()) <= -1)
-                {
-                    i++;
-                    swap(registrosOrdenados[i], registrosOrdenados[j]);
-                }
-            }
-        }
-    }
-    swap(registrosOrdenados[i + 1], registrosOrdenados[maiorIndice]);
-
-    return i + 1;
-}
-
-void quickSort(vector<Registro> &registrosOrdenados, int menorIndice, int maiorIndice)
-{
-    if (menorIndice < maiorIndice)
-    {
-        int pi = particao(registrosOrdenados, menorIndice, maiorIndice);
-
-        quickSort(registrosOrdenados, menorIndice, pi - 1);
-        quickSort(registrosOrdenados, pi + 1, maiorIndice);
-    }
-}
-
-bool verifica(Registro valor1, Registro valor2)
-{
-    if (strcmp(valor1.getState().c_str(), valor2.getState().c_str()) >= 1)
-    {
-        return true;
-    }
-    else if (strcmp(valor1.getState().c_str(), valor2.getState().c_str()) == 0)
-    {
-        if (strcmp(valor1.getName().c_str(), valor2.getName().c_str()) >= 1)
-        {
-            return true;
-        }
-        else if (strcmp(valor1.getName().c_str(), valor2.getName().c_str()) == 0)
-        {
-            if (strcmp(valor1.getDate().c_str(), valor2.getDate().c_str()) >= 1)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }
-        else
-            return false;
-    }
-    else
-        return false;
-}
-
-bool verifica2(Registro valor1, Registro valor2)
-{
-    if (strcmp(valor1.getState().c_str(), valor2.getState().c_str()) >= 1)
-    {
-        return true;
-    }
-    else if (strcmp(valor1.getState().c_str(), valor2.getState().c_str()) == 0)
-    {
-        if (strcmp(valor1.getName().c_str(), valor2.getName().c_str()) >= 1)
-        {
-            return true;
-        }
-        else if (strcmp(valor1.getName().c_str(), valor2.getName().c_str()) == 0)
-        {
-            if (strcmp(valor1.getDate().c_str(), valor2.getDate().c_str()) >= 0)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }
-        else
-            return false;
-    }
-    else
-        return false;
-}
-
-void insertionSort(vector<Registro> &registrosOrdenados)
-{
-    for (int i = 1; i < registrosOrdenados.size(); i++)
-    {
-        Registro pivo = registrosOrdenados[i];
-        int j = i - 1;
-        while (j >= 0 && verifica(registrosOrdenados[j], pivo))
-        {
-            registrosOrdenados[j + 1] = registrosOrdenados[j];
-            j--;
-        }
-        registrosOrdenados[j + 1] = pivo;
-    }
-}
-
-void merge(vector<Registro> arr, int l, int m, int r)
-{
-    int n1 = m - l + 1;
-    int n2 = r - m;
- 
-    // Create temp arrays
-    vector<Registro> L, R;
- 
-    // Copy data to temp arrays L[] and R[]
-    for (int i = 0; i < n1; i++)
-        L.push_back(arr[l + i]);
-    for (int j = 0; j < n2; j++)
-        R.push_back(arr[m + 1 + j]);
- 
-    // Merge the temp arrays back into arr[l..r]
- 
-    // Initial index of first subarray
-    int i = 0;
- 
-    // Initial index of second subarray
-    int j = 0;
- 
-    // Initial index of merged subarray
-    int k = l;
- 
-    while (i < n1 && j < n2) {
-        if (verifica2(R[j],L[i])) {
-            arr[k] = L[i];
-            i++;
-        }
-        else {
-            arr[k] = R[j];
-            j++;
-        }
-        k++;
-    }
- 
-    // Copy the remaining elements of
-    // L[], if there are any
-    while (i < n1) {
-        arr[k] = L[i];
-        i++;
-        k++;
-    }
- 
-    // Copy the remaining elements of
-    // R[], if there are any
-    while (j < n2) {
-        arr[k] = R[j];
-        j++;
-        k++;
-    }
-}
- 
-// l is for left index and r is
-// right index of the sub-array
-// of arr to be sorted */
-void mergeSort(vector<Registro> arr,int l,int r){
-    if(l>=r){
-        return;//returns recursively
-    }
-    int m = (l+r-1)/2;
-    mergeSort(arr,l,m);
-    mergeSort(arr,m+1,r);
-    merge(arr,l,m,r);
-}
-
 void removeAccents(string &str)
 {
     string accent_chars = "ÁÀÃÂÇáàãâçÉÊéêÍíÑÓÔÕñóôõÚÜúü";
@@ -319,38 +131,6 @@ bool validaComparacao(Registro candidato, Registro pivo)
         }
     }
     return false;
-}
-
-void quickSortMedio(vector<Registro> &registrosOrdenados,int inicio, int fim)
-{    
-    int i = inicio;
-    int j = fim - 1;
-    
-    Registro pivo = registrosOrdenados[ (inicio+fim)/2 ];
-
-    while(i<=j)
-    {
-        while(validaComparacao(registrosOrdenados[i],pivo) && i<fim)
-        {
-            i++;
-        }
-        while(validaComparacao(pivo,registrosOrdenados[j]) && j>inicio)
-        {
-            j--;
-        }
-
-        if(i<=j){
-            swap(registrosOrdenados[i], registrosOrdenados[j]);
-            i++;
-            j--;
-        }
-    }
-    if(j > inicio){
-        quickSortMedio(registrosOrdenados,inicio,j+1);
-    }
-    if(i < fim){
-        quickSortMedio(registrosOrdenados,i,fim);
-    }
 }
 
 bool menorElemento(Registro candidatoInicio, Registro candidatoFim)
@@ -478,11 +258,42 @@ void salvarArquivo(ofstream &arq, vector<Registro>registros){
     }
 }
 
+void quickSortInt(vector<int>&values, int began, int end){
+    int i, j, pivo, aux;
+	i = began;
+	j = end-1;
+	pivo = values[(began + end) / 2];
+	while(i <= j)
+	{
+		while(values[i] < pivo && i < end)
+		{
+			i++;
+		}
+		while(values[j] > pivo && j > began)
+		{
+			j--;
+		}
+		if(i <= j)
+		{
+			aux = values[i];
+			values[i] = values[j];
+			values[j] = aux;
+			i++;
+			j--;
+		}
+	}
+	if(j > began)
+		quickSortInt(values, began, j+1);
+	if(i < end)
+		quickSortInt(values, i, end);
+}
+
 void leArquivoTextoGeral(ifstream &arq)
 {
     ofstream saida("brazil_covid19_cities_processado.csv");
     vector<Registro> registros;
-    if (arq.is_open())
+    vector<int> teste;
+    if(arq.is_open())
     {
         string str;
         int cases, deaths;
@@ -508,20 +319,18 @@ void leArquivoTextoGeral(ifstream &arq)
 
                 registros.push_back(*registra);
 
+                teste.push_back(cases);
+
+                if(i == 100000){
+                    break;
+                }
             }
         }
 
         clock_t timeStart, timeStop;
         timeStart = clock();
-
-        //random_shuffle(registros.begin(),registros.end());
-
-        //quickSort(registros, 0, registros.size()-1);
-        //quickSortMedio(registros, 0, registros.size());
-        quickSortMediana(registros, 0, registros.size());
-
-        //insertionSort(registros);
-        //mergeSort(registros,0,registros.size() - 1);
+        //quickSortInt(teste,0,teste.size());
+        //quickSortMediana(registros, 0, registros.size());
 
         timeStop = clock();
         cout << "Tempo Gasto: " << ((double)(timeStop - timeStart) / CLOCKS_PER_SEC) << endl;
@@ -530,10 +339,9 @@ void leArquivoTextoGeral(ifstream &arq)
              << endl
              << endl;
 
-        /*for (int i = 0; i < registros.size(); i++)
+        /*for (int i = 0; i < teste.size(); i++)
         {
-            cout << i << " " << registros[i].getDate() << " " << registros[i].getState();
-            cout << " " << registros[i].getName() << endl;
+            cout<<teste[i]<<endl;
         }*/
         salvarArquivo(saida, registros);
     }
