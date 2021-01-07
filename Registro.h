@@ -24,11 +24,11 @@ class Registro {
     void setCases(int cases);
     void setDeaths(int deaths);
 
-    string getDate();
-    string getState();
-    string getName();
-    string getCode();
-    int getCases();
-    int getDeaths();
+    string& getDate();
+    string& getState();
+    string& getName();
+    string& getCode();
+    int& getCases();
+    int& getDeaths();
 
 };

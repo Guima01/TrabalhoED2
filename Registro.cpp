@@ -19,27 +19,27 @@ Registro::Registro(){
 
 Registro::~Registro(){}
 
-string Registro::getDate(){
+string& Registro::getDate(){
     return this->date;
 }
 
-string Registro::getState(){
+string& Registro::getState(){
     return this->state;
 }
 
-string Registro::getName(){
+string& Registro::getName(){
     return this->name;
 }
 
-string Registro::getCode(){
+string& Registro::getCode(){
     return this->code;
 }
 
-int Registro::getCases(){
+int& Registro::getCases(){
     return this->cases;
 }
 
-int Registro::getDeaths(){
+int& Registro::getDeaths(){
     return this->deaths;
 }
 

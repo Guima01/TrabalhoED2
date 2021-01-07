@@ -59,48 +59,21 @@ void removeAccents(string &str)
     }
 }
 
-bool validaComparacao(Registro candidato, Registro pivo)
-{
-    if (strcmp(candidato.getState().c_str(), pivo.getState().c_str()) <= 0)
-    {
-        if (!strcmp(candidato.getState().c_str(), pivo.getState().c_str()))
-        {
-            int verifica = strcmp(candidato.getName().c_str(), pivo.getName().c_str());
-            if (verifica >= 0)
-            {
-                if(!verifica)
-                {
-                    if (strcmp(candidato.getDate().c_str(), pivo.getDate().c_str()) <= -1)
-                    {
-                        return true;
-                    }
-                }
-            }
-            else
-            {
-                return true;
-            }
-        }
-        else
-        {
-            return true;
-        }
-    }
-    return false;
-}
-
 bool menorElemento(Registro candidatoInicio, Registro candidatoFim)
 {
-    if (strcmp(candidatoInicio.getState().c_str(), candidatoFim.getState().c_str()) <= 0)
+    bool verificaState = (candidatoInicio.getState() == candidatoFim.getState());
+
+    if(candidatoInicio.getState() < candidatoFim.getState() || verificaState)
     {
-        if (!strcmp(candidatoInicio.getState().c_str(), candidatoFim.getState().c_str()))
+        if (verificaState)
         {
-            int verifica = strcmp(candidatoInicio.getName().c_str(), candidatoFim.getName().c_str());
-            if (verifica <= 0)
+            bool verificaName = (candidatoInicio.getName() == candidatoFim.getName());
+
+            if(candidatoInicio.getName() < candidatoFim.getName() || verificaName)
             {
-                if (!verifica)
+                if (verificaName)
                 {
-                    if (strcmp(candidatoInicio.getDate().c_str(), candidatoFim.getDate().c_str()) < 0)
+                    if (candidatoInicio.getDate() < candidatoFim.getDate())
                     {
                         return true;
                     }
@@ -135,6 +108,7 @@ void quickSortMediana(vector<Registro> &registrosOrdenados, int inicio, int fim)
     {
         if (menorElemento(registrosOrdenados[(inicio + fim) / 2], registrosOrdenados[j]))
         {
+            
             pivo = registrosOrdenados[(inicio + fim) / 2];
         }
         else
@@ -170,11 +144,11 @@ void quickSortMediana(vector<Registro> &registrosOrdenados, int inicio, int fim)
 
     while (i <= j)
     {
-        while (validaComparacao(registrosOrdenados[i], pivo) && i < fim)
+        while (menorElemento(registrosOrdenados[i], pivo) && i < fim)
         {
             i++;
         }
-        while (validaComparacao(pivo, registrosOrdenados[j]) && j > inicio)
+        while (menorElemento(pivo, registrosOrdenados[j]) && j > inicio)
         {
             j--;
         }
@@ -185,6 +159,12 @@ void quickSortMediana(vector<Registro> &registrosOrdenados, int inicio, int fim)
             i++;
             j--;
         }
+        else
+        {
+            break;
+        }
+        
+
     }
     if (j > inicio)
     {
@@ -315,6 +295,11 @@ int main(int argc, char const *argv[])
     ifstream arq;
     arq.open(argv[1], ios::in);
     leArquivoTextoGeral(arq);
+
+   /*/ string s = "ab";
+    string b = "b";
+    bool c = (s > b);
+    cout << c <<endl;*/
 
     return 0;
 }
