@@ -97,6 +97,8 @@ bool menorElemento(Registro candidatoInicio, Registro candidatoFim)
     return false;
 }
 
+
+
 void quickSortMediana(vector<Registro> &registrosOrdenados, int inicio, int fim)
 {
     int i = inicio;
@@ -107,19 +109,21 @@ void quickSortMediana(vector<Registro> &registrosOrdenados, int inicio, int fim)
     if (menorElemento(registrosOrdenados[inicio], registrosOrdenados[(inicio + fim) / 2]))
     {
         if (menorElemento(registrosOrdenados[(inicio + fim) / 2], registrosOrdenados[j]))
-        {
-            
+        {           
             pivo = registrosOrdenados[(inicio + fim) / 2];
         }
         else
         {
             if (menorElemento(registrosOrdenados[inicio], registrosOrdenados[j]))
             {
-                pivo = registrosOrdenados[j];
+                swap(registrosOrdenados[j], registrosOrdenados[(inicio+fim)/2]);
+                pivo = registrosOrdenados[(inicio + fim) / 2];
             }
             else
             {
-                pivo = registrosOrdenados[inicio];
+                swap(registrosOrdenados[inicio], registrosOrdenados[(inicio+fim)/2]);
+                swap(registrosOrdenados[inicio], registrosOrdenados[j]);
+                pivo = registrosOrdenados[(inicio + fim) / 2];
             }
         }
     }
@@ -128,16 +132,21 @@ void quickSortMediana(vector<Registro> &registrosOrdenados, int inicio, int fim)
         if (menorElemento(registrosOrdenados[j], registrosOrdenados[(inicio + fim) / 2]))
         {
             pivo = registrosOrdenados[(inicio + fim) / 2];
+            swap(registrosOrdenados[j], registrosOrdenados[inicio]);
         }
         else
         {
             if (menorElemento(registrosOrdenados[j], registrosOrdenados[inicio]))
             {
-                pivo = registrosOrdenados[j];
+                swap(registrosOrdenados[inicio], registrosOrdenados[(inicio+fim)/2]);
+                swap(registrosOrdenados[j], registrosOrdenados[(inicio+fim)/2]);
+                pivo = registrosOrdenados[(inicio + fim) / 2];
             }
             else
             {
-                pivo = registrosOrdenados[inicio];
+
+                swap(registrosOrdenados[inicio], registrosOrdenados[(inicio+fim)/2]);
+                pivo = registrosOrdenados[(inicio + fim) / 2];
             }
         }
     }
@@ -159,12 +168,6 @@ void quickSortMediana(vector<Registro> &registrosOrdenados, int inicio, int fim)
             i++;
             j--;
         }
-        else
-        {
-            break;
-        }
-        
-
     }
     if (j > inicio)
     {
@@ -295,11 +298,6 @@ int main(int argc, char const *argv[])
     ifstream arq;
     arq.open(argv[1], ios::in);
     leArquivoTextoGeral(arq);
-
-   /*/ string s = "ab";
-    string b = "b";
-    bool c = (s > b);
-    cout << c <<endl;*/
 
     return 0;
 }
