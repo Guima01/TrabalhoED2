@@ -59,7 +59,7 @@ void removeAccents(string &str)
     }
 }
 
-bool menorElemento(Registro candidatoInicio, Registro candidatoFim)
+bool menorElemento(Registro &candidatoInicio, Registro &candidatoFim)
 {
     bool verificaState = (candidatoInicio.getState() == candidatoFim.getState());
 
