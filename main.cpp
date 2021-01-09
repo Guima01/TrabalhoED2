@@ -77,6 +77,7 @@ bool menorElemento(Registro &candidatoInicio, Registro &candidatoFim)
                     {
                         return true;
                     }
+                    else return false;
                 }
                 else
                 {
@@ -97,7 +98,42 @@ bool menorElemento(Registro &candidatoInicio, Registro &candidatoFim)
     return false;
 }
 
+void merge(vector<Registro> &arr, int l, int m, int r) {
+    int i, j, k;
+    int n1 = m - l + 1;
+    int n2 = r - m;
 
+    Registro *L = new Registro[n1], *R = new Registro[n2];
+
+    for (i = 0; i < n1; i++) L[i] = arr[l + i];
+    for (j = 0; j < n2; j++) R[j] = arr[m + 1 + j];
+
+    i = 0;
+    j = 0;
+    k = l;
+    while (i < n1 || j < n2) {
+        if (j >= n2 || (i < n1 && menorElemento(L[i], R[j]))) {
+            arr[k] = L[i];
+            i++;
+        } else {
+            arr[k] = R[j];
+            j++;
+        }
+        k++;
+    }
+
+    delete[] L;
+    delete[] R;    
+}
+
+void mergeSort(vector<Registro> &arr, int l, int r) {
+    if (l < r) {
+        int m = l + (r - l) / 2;
+        mergeSort(arr, l, m);
+        mergeSort(arr, m + 1, r);
+        merge(arr, l, m, r);
+    }
+}
 
 void quickSortMediana(vector<Registro> &registrosOrdenados, int inicio, int fim)
 {
@@ -157,11 +193,11 @@ void quickSortMediana(vector<Registro> &registrosOrdenados, int inicio, int fim)
         {
             i++;
         }
+
         while (menorElemento(pivo, registrosOrdenados[j]) && j > inicio)
         {
             j--;
         }
-
         if (i <= j)
         {
             swap(registrosOrdenados[i], registrosOrdenados[j]);
@@ -266,14 +302,16 @@ void leArquivoTextoGeral(ifstream &arq)
 
                 registros.push_back(*registra);
 
-                teste.push_back(cases);
+                teste.push_back(i);
+
             }
         }
 
         clock_t timeStart, timeStop;
         timeStart = clock();
         //quickSortInt(teste,0,teste.size());
-        quickSortMediana(registros, 0, registros.size());
+        //quickSortMediana(registros, 0, registros.size());
+        mergeSort(registros, 0, registros.size() - 1);
 
         timeStop = clock();
         cout << "Tempo Gasto: " << ((double)(timeStop - timeStart) / CLOCKS_PER_SEC) << endl;
