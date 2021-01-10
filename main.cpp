@@ -7,7 +7,6 @@
 #include <vector>
 #include <cstring>
 #include <algorithm>
-#include <typeinfo>
 #include "Registro.h"
 
 using namespace std;
@@ -63,13 +62,13 @@ bool menorElemento(Registro &candidatoInicio, Registro &candidatoFim)
 {
     bool verificaState = (candidatoInicio.getState() == candidatoFim.getState());
 
-    if(candidatoInicio.getState() < candidatoFim.getState() || verificaState)
+    if (candidatoInicio.getState() < candidatoFim.getState() || verificaState)
     {
         if (verificaState)
         {
             bool verificaName = (candidatoInicio.getName() == candidatoFim.getName());
 
-            if(candidatoInicio.getName() < candidatoFim.getName() || verificaName)
+            if (candidatoInicio.getName() < candidatoFim.getName() || verificaName)
             {
                 if (verificaName)
                 {
@@ -77,7 +76,8 @@ bool menorElemento(Registro &candidatoInicio, Registro &candidatoFim)
                     {
                         return true;
                     }
-                    else return false;
+                    else
+                        return false;
                 }
                 else
                 {
@@ -98,24 +98,31 @@ bool menorElemento(Registro &candidatoInicio, Registro &candidatoFim)
     return false;
 }
 
-void merge(vector<Registro> &arr, int l, int m, int r) {
+void merge(vector<Registro> &arr, int l, int m, int r)
+{
     int i, j, k;
     int n1 = m - l + 1;
     int n2 = r - m;
 
     Registro *L = new Registro[n1], *R = new Registro[n2];
 
-    for (i = 0; i < n1; i++) L[i] = arr[l + i];
-    for (j = 0; j < n2; j++) R[j] = arr[m + 1 + j];
+    for (i = 0; i < n1; i++)
+        L[i] = arr[l + i];
+    for (j = 0; j < n2; j++)
+        R[j] = arr[m + 1 + j];
 
     i = 0;
     j = 0;
     k = l;
-    while (i < n1 || j < n2) {
-        if (j >= n2 || (i < n1 && menorElemento(L[i], R[j]))) {
+    while (i < n1 || j < n2)
+    {
+        if (j >= n2 || (i < n1 && menorElemento(L[i], R[j])))
+        {
             arr[k] = L[i];
             i++;
-        } else {
+        }
+        else
+        {
             arr[k] = R[j];
             j++;
         }
@@ -123,15 +130,20 @@ void merge(vector<Registro> &arr, int l, int m, int r) {
     }
 
     delete[] L;
-    delete[] R;    
+    delete[] R;
 }
 
-void mergeSort(vector<Registro> &arr, int l, int r) {
-    if (l < r) {
+void mergeSort(vector<Registro> &arr, int l, int r)
+{
+    if (l < r)
+    {
         int m = l + (r - l) / 2;
         mergeSort(arr, l, m);
         mergeSort(arr, m + 1, r);
-        merge(arr, l, m, r);
+        if (menorElemento(arr[m+1], arr[m]))
+        {
+            merge(arr, l, m, r);
+        }
     }
 }
 
@@ -145,19 +157,19 @@ void quickSortMediana(vector<Registro> &registrosOrdenados, int inicio, int fim)
     if (menorElemento(registrosOrdenados[inicio], registrosOrdenados[(inicio + fim) / 2]))
     {
         if (menorElemento(registrosOrdenados[(inicio + fim) / 2], registrosOrdenados[j]))
-        {           
+        {
             pivo = registrosOrdenados[(inicio + fim) / 2];
         }
         else
         {
             if (menorElemento(registrosOrdenados[inicio], registrosOrdenados[j]))
             {
-                swap(registrosOrdenados[j], registrosOrdenados[(inicio+fim)/2]);
+                swap(registrosOrdenados[j], registrosOrdenados[(inicio + fim) / 2]);
                 pivo = registrosOrdenados[(inicio + fim) / 2];
             }
             else
             {
-                swap(registrosOrdenados[inicio], registrosOrdenados[(inicio+fim)/2]);
+                swap(registrosOrdenados[inicio], registrosOrdenados[(inicio + fim) / 2]);
                 swap(registrosOrdenados[inicio], registrosOrdenados[j]);
                 pivo = registrosOrdenados[(inicio + fim) / 2];
             }
@@ -174,14 +186,14 @@ void quickSortMediana(vector<Registro> &registrosOrdenados, int inicio, int fim)
         {
             if (menorElemento(registrosOrdenados[j], registrosOrdenados[inicio]))
             {
-                swap(registrosOrdenados[inicio], registrosOrdenados[(inicio+fim)/2]);
-                swap(registrosOrdenados[j], registrosOrdenados[(inicio+fim)/2]);
+                swap(registrosOrdenados[inicio], registrosOrdenados[(inicio + fim) / 2]);
+                swap(registrosOrdenados[j], registrosOrdenados[(inicio + fim) / 2]);
                 pivo = registrosOrdenados[(inicio + fim) / 2];
             }
             else
             {
 
-                swap(registrosOrdenados[inicio], registrosOrdenados[(inicio+fim)/2]);
+                swap(registrosOrdenados[inicio], registrosOrdenados[(inicio + fim) / 2]);
                 pivo = registrosOrdenados[(inicio + fim) / 2];
             }
         }
