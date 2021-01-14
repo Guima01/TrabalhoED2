@@ -7,6 +7,7 @@
 #include <vector>
 #include <cstring>
 #include <algorithm>
+#include <random>
 #include "Registro.h"
 
 using namespace std;
@@ -140,7 +141,7 @@ void mergeSort(vector<Registro> &arr, int l, int r)
         int m = l + (r - l) / 2;
         mergeSort(arr, l, m);
         mergeSort(arr, m + 1, r);
-        if (menorElemento(arr[m+1], arr[m]))
+        if (menorElemento(arr[m + 1], arr[m]))
         {
             merge(arr, l, m, r);
         }
@@ -227,10 +228,11 @@ void quickSortMediana(vector<Registro> &registrosOrdenados, int inicio, int fim)
     }
 }
 
-void salvarArquivo(ofstream &arq, vector<Registro> registros)
+void salvarArquivo(vector<Registro> &registros)
 {
+    ofstream saida("brazil_covid19_cities_processado.csv");
     int cases = 10000;
-    arq << "date,state,name,code,cases,deaths" << endl;
+    saida << "date,state,name,code,cases,deaths" << endl;
     for (int i = 0; i < registros.size(); i++)
     {
         if (registros[i].getDate() == "2020-03-27")
@@ -243,12 +245,12 @@ void salvarArquivo(ofstream &arq, vector<Registro> registros)
             cases = registros[i].getCases();
             registros[i].setCases(registros[i].getCases() - aux);
         }
-        arq << registros[i].getDate() << ",";
-        arq << registros[i].getState() << ",";
-        arq << registros[i].getName() << ",";
-        arq << registros[i].getCode() << ",";
-        arq << registros[i].getCases() << ",";
-        arq << registros[i].getDeaths() << endl;
+        saida << registros[i].getDate() << ",";
+        saida << registros[i].getState() << ",";
+        saida << registros[i].getName() << ",";
+        saida << registros[i].getCode() << ",";
+        saida << registros[i].getCases() << ",";
+        saida << registros[i].getDeaths() << endl;
     }
 }
 
@@ -283,10 +285,66 @@ void quickSortInt(vector<int> &values, int began, int end)
         quickSortInt(values, i, end);
 }
 
-void leArquivoTextoGeral(ifstream &arq)
+void leArquivoNovamente(vector<Registro> &registros, ifstream &arq)
 {
-    ofstream saida("brazil_covid19_cities_processado.csv");
-    vector<Registro> registros;
+    int m[] = {50000, 100000, 200000, 500000, 1000000};
+    if (arq.is_open())
+    {
+        string str;
+        int cases, deaths;
+
+        for (int i = 0; getline(arq, str); i++)
+        {
+            if (i != 0)
+            {
+                Registro *registra = new Registro();
+
+                vector<string> stringDados = split(str, ',');
+
+                cases = atoi(stringDados[4].c_str());
+                deaths = atoi(stringDados[5].c_str());
+
+                registra->setDate(stringDados[0]);
+                registra->setState(stringDados[1]);
+                registra->setName(stringDados[2]);
+                registra->setCode(stringDados[3]);
+                registra->setCases(cases);
+                registra->setDeaths(deaths);
+
+                registros.push_back(*registra);
+            }
+        }
+
+        vector<Registro> teste;
+        auto rng = std::default_random_engine {};
+        shuffle(registros.begin(),registros.end(),rng);
+        for (int i = 0; i < 5; i++)
+        {
+            for(int j = 0; j < m[i]; j++){
+                teste.push_back(registros[j]);
+            }
+            clock_t timeStart, timeStop;
+            timeStart = clock();
+            //quickSortInt(teste,0,teste.size());
+            //quickSortMediana(registros, 0, registros.size());
+            mergeSort(teste, 0, teste.size() - 1);
+
+            timeStop = clock();
+            cout << "Tempo Gasto: " << ((double)(timeStop - timeStart) / CLOCKS_PER_SEC) << endl;
+
+            cout << endl
+                 << endl
+                 << endl;
+
+            teste.clear();
+        }
+    }
+    else
+        cerr << "ERRO: O arquivo nao pode ser aberto!" << endl;
+}
+
+void leArquivoTextoGeral(vector<Registro> &registros, ifstream &arq)
+{
     vector<int> teste;
     if (arq.is_open())
     {
@@ -315,15 +373,14 @@ void leArquivoTextoGeral(ifstream &arq)
                 registros.push_back(*registra);
 
                 teste.push_back(i);
-
             }
         }
 
         clock_t timeStart, timeStop;
         timeStart = clock();
         //quickSortInt(teste,0,teste.size());
-        //quickSortMediana(registros, 0, registros.size());
-        mergeSort(registros, 0, registros.size() - 1);
+        quickSortMediana(registros, 0, registros.size());
+        //mergeSort(registros, 0, registros.size() - 1);
 
         timeStop = clock();
         cout << "Tempo Gasto: " << ((double)(timeStop - timeStart) / CLOCKS_PER_SEC) << endl;
@@ -331,12 +388,6 @@ void leArquivoTextoGeral(ifstream &arq)
         cout << endl
              << endl
              << endl;
-
-        /*for (int i = 0; i < teste.size(); i++)
-        {
-            cout<<teste[i]<<endl;
-        }*/
-        salvarArquivo(saida, registros);
     }
     else
         cerr << "ERRO: O arquivo nao pode ser aberto!" << endl;
@@ -345,9 +396,14 @@ void leArquivoTextoGeral(ifstream &arq)
 int main(int argc, char const *argv[])
 {
 
+    vector<Registro> registros;
     ifstream arq;
     arq.open(argv[1], ios::in);
-    leArquivoTextoGeral(arq);
+    leArquivoTextoGeral(registros, arq);
+    salvarArquivo(registros);
+    /*arq.open("brazil_covid19_cities_processado.csv", ios::in);
+    registros.clear();
+    leArquivoNovamente(registros, arq);*/
 
     return 0;
 }
