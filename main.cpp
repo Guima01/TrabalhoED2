@@ -153,9 +153,9 @@ void quickSortMediana(vector<Registro> &registrosOrdenados, int inicio, int fim)
     int i = inicio;
     int j = fim - 1;
 
-    Registro pivo;
+    Registro pivo = registrosOrdenados[(inicio + fim) / 2];
 
-    if (menorElemento(registrosOrdenados[inicio], registrosOrdenados[(inicio + fim) / 2]))
+    /*if (menorElemento(registrosOrdenados[inicio], registrosOrdenados[(inicio + fim) / 2]))
     {
         if (menorElemento(registrosOrdenados[(inicio + fim) / 2], registrosOrdenados[j]))
         {
@@ -198,7 +198,7 @@ void quickSortMediana(vector<Registro> &registrosOrdenados, int inicio, int fim)
                 pivo = registrosOrdenados[(inicio + fim) / 2];
             }
         }
-    }
+    }*/
 
     while (i <= j)
     {
