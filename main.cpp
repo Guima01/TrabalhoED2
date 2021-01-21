@@ -8,6 +8,7 @@
 #include <cstring>
 #include <algorithm>
 #include <random>
+#include<bits/stdc++.h> 
 #include "Registro.h"
 
 using namespace std;
@@ -285,6 +286,56 @@ void quickSortInt(vector<int> &values, int began, int end)
         quickSortInt(values, i, end);
 }
 
+struct No 
+{ 
+    Registro registro;
+    struct No *NoEsquerda, *NoDireita; 
+}; 
+  
+struct No *novoNo(Registro registro) 
+{ 
+    struct No *temp = new No; 
+    temp->registro = registro; 
+    temp->NoEsquerda = temp->NoDireita = NULL; 
+    return temp; 
+} 
+  
+void armazenaOrdenado(No *root, vector<Registro> &arr, int &i) 
+{ 
+    if (root != NULL) 
+    { 
+        armazenaOrdenado(root->NoEsquerda, arr, i); 
+        arr[i++] = root->registro; 
+        armazenaOrdenado(root->NoDireita, arr, i); 
+    }
+}
+  
+No* insereNo(No* no, Registro registro) 
+{ 
+    /* Se a árvore está vazia, retorna um novo nó */
+    if (no == NULL) return novoNo(registro); 
+  
+    if (registro.getCases() < no->registro.getCases()) 
+        no->NoEsquerda  = insereNo(no->NoEsquerda, registro); 
+    else if (registro.getCases() > no->registro.getCases()) 
+        no->NoDireita = insereNo(no->NoDireita, registro); 
+  
+    return no; 
+} 
+
+void treeSort(vector<Registro> &arr, int n) 
+{ 
+    struct No *root = NULL; 
+  
+    // Constrói a árvore
+    root = insereNo(root, arr[0]); 
+    for (int i=1; i<n; i++) 
+        root = insereNo(root, arr[i]); 
+  
+    int i = 0; 
+    armazenaOrdenado(root, arr, i); 
+} 
+
 void leArquivoNovamente(vector<Registro> &registros, ifstream &arq)
 {
     int m[] = {50000, 100000, 200000, 500000, 1000000};
@@ -327,7 +378,8 @@ void leArquivoNovamente(vector<Registro> &registros, ifstream &arq)
             timeStart = clock();
             //quickSortInt(teste,0,teste.size());
             //quickSortMediana(registros, 0, registros.size());
-            mergeSort(teste, 0, teste.size() - 1);
+            //mergeSort(teste, 0, teste.size() - 1);
+            treeSort(registros, registros.size());
 
             timeStop = clock();
             cout << "Tempo Gasto: " << ((double)(timeStop - timeStart) / CLOCKS_PER_SEC) << endl;
@@ -379,8 +431,9 @@ void leArquivoTextoGeral(vector<Registro> &registros, ifstream &arq)
         clock_t timeStart, timeStop;
         timeStart = clock();
         //quickSortInt(teste,0,teste.size());
-        quickSortMediana(registros, 0, registros.size());
-        //mergeSort(registros, 0, registros.size() - 1);
+        //quickSortMediana(registros, 0, registros.size());
+        mergeSort(registros, 0, registros.size() - 1);
+        //treeSort(registros, (registros.size()));
 
         timeStop = clock();
         cout << "Tempo Gasto: " << ((double)(timeStop - timeStart) / CLOCKS_PER_SEC) << endl;
