@@ -156,51 +156,6 @@ void quickSortMediana(vector<Registro> &registrosOrdenados, int inicio, int fim)
 
     Registro pivo = registrosOrdenados[(inicio + fim) / 2];
 
-    /*if (menorElemento(registrosOrdenados[inicio], registrosOrdenados[(inicio + fim) / 2]))
-    {
-        if (menorElemento(registrosOrdenados[(inicio + fim) / 2], registrosOrdenados[j]))
-        {
-            pivo = registrosOrdenados[(inicio + fim) / 2];
-        }
-        else
-        {
-            if (menorElemento(registrosOrdenados[inicio], registrosOrdenados[j]))
-            {
-                swap(registrosOrdenados[j], registrosOrdenados[(inicio + fim) / 2]);
-                pivo = registrosOrdenados[(inicio + fim) / 2];
-            }
-            else
-            {
-                swap(registrosOrdenados[inicio], registrosOrdenados[(inicio + fim) / 2]);
-                swap(registrosOrdenados[inicio], registrosOrdenados[j]);
-                pivo = registrosOrdenados[(inicio + fim) / 2];
-            }
-        }
-    }
-    else
-    {
-        if (menorElemento(registrosOrdenados[j], registrosOrdenados[(inicio + fim) / 2]))
-        {
-            pivo = registrosOrdenados[(inicio + fim) / 2];
-            swap(registrosOrdenados[j], registrosOrdenados[inicio]);
-        }
-        else
-        {
-            if (menorElemento(registrosOrdenados[j], registrosOrdenados[inicio]))
-            {
-                swap(registrosOrdenados[inicio], registrosOrdenados[(inicio + fim) / 2]);
-                swap(registrosOrdenados[j], registrosOrdenados[(inicio + fim) / 2]);
-                pivo = registrosOrdenados[(inicio + fim) / 2];
-            }
-            else
-            {
-
-                swap(registrosOrdenados[inicio], registrosOrdenados[(inicio + fim) / 2]);
-                pivo = registrosOrdenados[(inicio + fim) / 2];
-            }
-        }
-    }*/
-
     while (i <= j)
     {
         while (menorElemento(registrosOrdenados[i], pivo) && i < fim)
@@ -255,37 +210,6 @@ void salvarArquivo(vector<Registro> &registros)
     }
 }
 
-void quickSortInt(vector<int> &values, int began, int end)
-{
-    int i, j, pivo, aux;
-    i = began;
-    j = end - 1;
-    pivo = values[(began + end) / 2];
-    while (i <= j)
-    {
-        while (values[i] < pivo && i < end)
-        {
-            i++;
-        }
-        while (values[j] > pivo && j > began)
-        {
-            j--;
-        }
-        if (i <= j)
-        {
-            aux = values[i];
-            values[i] = values[j];
-            values[j] = aux;
-            i++;
-            j--;
-        }
-    }
-    if (j > began)
-        quickSortInt(values, began, j + 1);
-    if (i < end)
-        quickSortInt(values, i, end);
-}
-
 struct No 
 { 
     Registro registro;
@@ -315,9 +239,9 @@ No* insereNo(No* no, Registro registro)
     /* Se a árvore está vazia, retorna um novo nó */
     if (no == NULL) return novoNo(registro); 
   
-    if (registro.getCases() < no->registro.getCases()) 
+    if (menorElemento(registro, no->registro)) 
         no->NoEsquerda  = insereNo(no->NoEsquerda, registro); 
-    else if (registro.getCases() > no->registro.getCases()) 
+    else
         no->NoDireita = insereNo(no->NoDireita, registro); 
   
     return no; 
@@ -378,8 +302,8 @@ void leArquivoNovamente(vector<Registro> &registros, ifstream &arq)
             timeStart = clock();
             //quickSortInt(teste,0,teste.size());
             //quickSortMediana(registros, 0, registros.size());
-            //mergeSort(teste, 0, teste.size() - 1);
-            treeSort(registros, registros.size());
+            mergeSort(teste, 0, teste.size() - 1);
+            //treeSort(registros, registros.size());
 
             timeStop = clock();
             cout << "Tempo Gasto: " << ((double)(timeStop - timeStart) / CLOCKS_PER_SEC) << endl;
@@ -397,7 +321,6 @@ void leArquivoNovamente(vector<Registro> &registros, ifstream &arq)
 
 void leArquivoTextoGeral(vector<Registro> &registros, ifstream &arq)
 {
-    vector<int> teste;
     if (arq.is_open())
     {
         string str;
@@ -424,15 +347,13 @@ void leArquivoTextoGeral(vector<Registro> &registros, ifstream &arq)
 
                 registros.push_back(*registra);
 
-                teste.push_back(i);
             }
         }
 
         clock_t timeStart, timeStop;
         timeStart = clock();
-        //quickSortInt(teste,0,teste.size());
-        //quickSortMediana(registros, 0, registros.size());
-        mergeSort(registros, 0, registros.size() - 1);
+        quickSortMediana(registros, 0, registros.size());
+        //mergeSort(registros, 0, registros.size() - 1);
         //treeSort(registros, (registros.size()));
 
         timeStop = clock();
