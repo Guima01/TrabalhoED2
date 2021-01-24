@@ -8,7 +8,7 @@
 #include <cstring>
 #include <algorithm>
 #include <random>
-#include<bits/stdc++.h> 
+#include <bits/stdc++.h>
 #include "Registro.h"
 
 using namespace std;
@@ -100,7 +100,7 @@ bool menorElemento(Registro &candidatoInicio, Registro &candidatoFim)
     return false;
 }
 
-void merge(vector<Registro> &arr, int l, int m, int r)
+void merge(vector<Registro> &arr, int l, int m, int r, int &keyComparation, int &keyMovimentation)
 {
     int i, j, k;
     int n1 = m - l + 1;
@@ -116,15 +116,19 @@ void merge(vector<Registro> &arr, int l, int m, int r)
     i = 0;
     j = 0;
     k = l;
+
     while (i < n1 || j < n2)
     {
-        if (j >= n2 || (i < n1 && menorElemento(L[i], R[j])))
+        keyComparation = keyComparation + 1;
+        if (j >= n2 || (i < n1 && L[i].getCases() < R[j].getCases()))
         {
+            keyMovimentation = keyMovimentation + 1;
             arr[k] = L[i];
             i++;
         }
         else
         {
+            keyMovimentation = keyMovimentation + 1;
             arr[k] = R[j];
             j++;
         }
@@ -135,16 +139,17 @@ void merge(vector<Registro> &arr, int l, int m, int r)
     delete[] R;
 }
 
-void mergeSort(vector<Registro> &arr, int l, int r)
+void mergeSort(vector<Registro> &arr, int l, int r, int &keyComparation, int &keyMovimentation)
 {
     if (l < r)
     {
         int m = l + (r - l) / 2;
-        mergeSort(arr, l, m);
-        mergeSort(arr, m + 1, r);
-        if (menorElemento(arr[m + 1], arr[m]))
+        mergeSort(arr, l, m, keyComparation, keyMovimentation);
+        mergeSort(arr, m + 1, r, keyComparation, keyMovimentation);
+        keyComparation = keyComparation + 1;
+        if (arr[m + 1].getCases() < arr[m].getCases())
         {
-            merge(arr, l, m, r);
+            merge(arr, l, m, r, keyComparation, keyMovimentation);
         }
     }
 }
@@ -184,6 +189,46 @@ void quickSortMediana(vector<Registro> &registrosOrdenados, int inicio, int fim)
     }
 }
 
+void quickSortCases(vector<Registro> &registrosOrdenados, int inicio, int fim, int &keyComparation, int &keyMovimentation)
+{
+    int i = inicio;
+    int j = fim - 1;
+
+    Registro pivo = registrosOrdenados[(inicio + fim) / 2];
+
+    while (i <= j)
+    {
+        keyComparation = keyComparation + 1;
+        while ((registrosOrdenados[i].getCases() < pivo.getCases()) && i < fim)
+        {
+            keyComparation = keyComparation + 1;
+            i++;
+        }
+
+        keyComparation = keyComparation + 1;
+        while ((registrosOrdenados[j].getCases() > pivo.getCases()) && j > inicio)
+        {
+            keyComparation = keyComparation + 1;
+            j--;
+        }
+        if (i <= j)
+        {
+            keyMovimentation = keyMovimentation + 1;
+            swap(registrosOrdenados[i], registrosOrdenados[j]);
+            i++;
+            j--;
+        }
+    }
+    if (j > inicio)
+    {
+        quickSortCases(registrosOrdenados, inicio, j + 1, keyComparation,keyMovimentation);
+    }
+    if (i < fim)
+    {
+        quickSortCases(registrosOrdenados, i, fim, keyComparation,keyMovimentation);
+    }
+}
+
 void salvarArquivo(vector<Registro> &registros)
 {
     ofstream saida("brazil_covid19_cities_processado.csv");
@@ -210,59 +255,66 @@ void salvarArquivo(vector<Registro> &registros)
     }
 }
 
-struct No 
-{ 
+struct No
+{
     Registro registro;
-    struct No *NoEsquerda, *NoDireita; 
-}; 
-  
-struct No *novoNo(Registro registro) 
-{ 
-    struct No *temp = new No; 
-    temp->registro = registro; 
-    temp->NoEsquerda = temp->NoDireita = NULL; 
-    return temp; 
-} 
-  
-void armazenaOrdenado(No *root, vector<Registro> &arr, int &i) 
-{ 
-    if (root != NULL) 
-    { 
-        armazenaOrdenado(root->NoEsquerda, arr, i); 
-        arr[i++] = root->registro; 
-        armazenaOrdenado(root->NoDireita, arr, i); 
+    struct No *NoEsquerda, *NoDireita;
+};
+
+struct No *novoNo(Registro registro)
+{
+    struct No *temp = new No;
+    temp->registro = registro;
+    temp->NoEsquerda = temp->NoDireita = NULL;
+    return temp;
+}
+
+void armazenaOrdenado(No *root, vector<Registro> &arr, int &i)
+{
+    if (root != NULL)
+    {
+        armazenaOrdenado(root->NoEsquerda, arr, i);
+        arr[i++] = root->registro;
+        armazenaOrdenado(root->NoDireita, arr, i);
     }
 }
-  
-No* insereNo(No* no, Registro registro) 
-{ 
-    /* Se a árvore está vazia, retorna um novo nó */
-    if (no == NULL) return novoNo(registro); 
-  
-    if (menorElemento(registro, no->registro)) 
-        no->NoEsquerda  = insereNo(no->NoEsquerda, registro); 
-    else
-        no->NoDireita = insereNo(no->NoDireita, registro); 
-  
-    return no; 
-} 
 
-void treeSort(vector<Registro> &arr, int n) 
-{ 
-    struct No *root = NULL; 
-  
+No *insereNo(No *no, Registro registro)
+{
+    /* Se a árvore está vazia, retorna um novo nó */
+    if (no == NULL)
+        return novoNo(registro);
+
+    if (registro.getCases() < no->registro.getCases())
+    {
+        no->NoEsquerda = insereNo(no->NoEsquerda, registro);
+    }
+    else if(registro.getCases() > no->registro.getCases())
+    {
+        no->NoDireita = insereNo(no->NoDireita, registro);
+    }
+
+    return no;
+}
+
+void treeSort(vector<Registro> &arr, int n)
+{
+    struct No *root = NULL;
+
     // Constrói a árvore
-    root = insereNo(root, arr[0]); 
-    for (int i=1; i<n; i++) 
-        root = insereNo(root, arr[i]); 
-  
-    int i = 0; 
-    armazenaOrdenado(root, arr, i); 
-} 
+    root = insereNo(root, arr[0]);
+    for (int i = 1; i < n; i++)
+    {
+        root = insereNo(root, arr[i]);
+    }
+
+    int i = 0;
+    armazenaOrdenado(root, arr, i);
+}
 
 void leArquivoNovamente(vector<Registro> &registros, ifstream &arq)
 {
-    int m[] = {50000, 100000, 200000, 500000, 1000000};
+    int m[] = {10000, 50000, 100000, 500000, 1000000};
     if (arq.is_open())
     {
         string str;
@@ -290,27 +342,38 @@ void leArquivoNovamente(vector<Registro> &registros, ifstream &arq)
             }
         }
 
+
         vector<Registro> teste;
-        auto rng = std::default_random_engine {};
-        shuffle(registros.begin(),registros.end(),rng);
+        vector<Registro> teste2;
+        int quickSortComparation = 0;
+        int quickSortMovimentation = 0;
+        int mergeSortComparation = 0;
+        int mergeSortMovimentation = 0;
+        clock_t timeStart, timeStop;
+        auto rng = std::default_random_engine{};
+        shuffle(registros.begin(), registros.end(), rng);
         for (int i = 0; i < 5; i++)
         {
-            for(int j = 0; j < m[i]; j++){
+            quickSortComparation = 0;
+            quickSortMovimentation = 0;
+            for (int j = 0; j < m[i]; j++)
+            {
                 teste.push_back(registros[j]);
             }
-            clock_t timeStart, timeStop;
-            timeStart = clock();
-            //quickSortInt(teste,0,teste.size());
-            //quickSortMediana(registros, 0, registros.size());
-            mergeSort(teste, 0, teste.size() - 1);
-            //treeSort(registros, registros.size());
-
+            teste2 = teste;
+            quickSortCases(teste2, 0, teste2.size(), quickSortComparation, quickSortMovimentation);
             timeStop = clock();
-            cout << "Tempo Gasto: " << ((double)(timeStop - timeStart) / CLOCKS_PER_SEC) << endl;
+            cout << "Tempo Gasto com o QuickSort: " << ((double)(timeStop - timeStart) / CLOCKS_PER_SEC) << endl;
+            cout << "Comparacoes no QuickSort: " << quickSortComparation << endl;            
+            cout << "Movimentacoes no QuickSort: " << quickSortMovimentation << endl << endl;
 
-            cout << endl
-                 << endl
-                 << endl;
+            teste2 = teste;
+            timeStart = clock();
+            mergeSort(teste, 0, teste.size() - 1, mergeSortComparation, mergeSortMovimentation);
+            timeStop = clock();
+            cout << "Tempo Gasto com o mergeSort: " << ((double)(timeStop - timeStart) / CLOCKS_PER_SEC) << endl;
+            cout << "Comparacoes no MergeSort: " << mergeSortComparation << endl;            
+            cout << "Movimentacoes no MergeSort: " << mergeSortMovimentation << endl << endl;
 
             teste.clear();
         }
@@ -346,13 +409,13 @@ void leArquivoTextoGeral(vector<Registro> &registros, ifstream &arq)
                 registra->setDeaths(deaths);
 
                 registros.push_back(*registra);
-
             }
         }
 
         clock_t timeStart, timeStop;
         timeStart = clock();
         quickSortMediana(registros, 0, registros.size());
+        //quickSortCases(registros, 0, registros.size());
         //mergeSort(registros, 0, registros.size() - 1);
         //treeSort(registros, (registros.size()));
 
