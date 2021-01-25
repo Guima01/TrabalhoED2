@@ -10,6 +10,7 @@
 #include <random>
 #include <bits/stdc++.h>
 #include "Registro.h"
+#include "Sorts.h"
 
 using namespace std;
 using namespace std::chrono;
@@ -25,234 +26,6 @@ vector<string> split(const string &s, char delim)
         result.push_back(item);
     }
     return result;
-}
-
-void removeAccents(string &str)
-{
-    string accent_chars = "ÁÀÃÂÇáàãâçÉÊéêÍíÑÓÔÕñóôõÚÜúü";
-    string unnacent_chars = "AAAAAAAACCaaaaaaaaccEEEEeeeeIIiiNNOOOOOOnnooooooUUUUuuuu";
-    for (int j = 0; str[j] != *"\0"; j++)
-    {
-        for (int i = 0; i < accent_chars.size(); i = i + 1)
-        {
-            if (str[j] == accent_chars[i])
-            {
-                if (str[j + 1] == accent_chars[i + 1])
-                {
-                    str[j] = unnacent_chars[i];
-                    if (str[j] == *"\0")
-                    {
-                        break;
-                    }
-                    str.erase(str.begin() + j + 1);
-                    break;
-                }
-                else
-                {
-                    i++;
-                }
-            }
-        }
-        if (str[j] == ' ' && (str[j + 1] >= 'a' && str[j + 1] <= 'z'))
-        {
-            str[j + 1] = str[j + 1] + 'A' - 'a';
-        }
-    }
-}
-
-bool menorElemento(Registro &candidatoInicio, Registro &candidatoFim)
-{
-    bool verificaState = (candidatoInicio.getState() == candidatoFim.getState());
-
-    if (candidatoInicio.getState() < candidatoFim.getState() || verificaState)
-    {
-        if (verificaState)
-        {
-            bool verificaName = (candidatoInicio.getName() == candidatoFim.getName());
-
-            if (candidatoInicio.getName() < candidatoFim.getName() || verificaName)
-            {
-                if (verificaName)
-                {
-                    if (candidatoInicio.getDate() < candidatoFim.getDate())
-                    {
-                        return true;
-                    }
-                    else
-                        return false;
-                }
-                else
-                {
-                    return true;
-                }
-            }
-            else
-            {
-                return false;
-            }
-        }
-        else
-        {
-            return true;
-        }
-    }
-
-    return false;
-}
-
-void merge(vector<Registro> &arr, int l, int m, int r, int &keyComparation, int &keyMovimentation)
-{
-    int i, j, k;
-    int n1 = m - l + 1;
-    int n2 = r - m;
-
-    Registro *L = new Registro[n1], *R = new Registro[n2];
-
-    for (i = 0; i < n1; i++)
-        L[i] = arr[l + i];
-    for (j = 0; j < n2; j++)
-        R[j] = arr[m + 1 + j];
-
-    i = 0;
-    j = 0;
-    k = l;
-
-    while (i < n1 || j < n2)
-    {
-        keyComparation = keyComparation + 1;
-        if (j >= n2 || (i < n1 && L[i].getCases() < R[j].getCases()))
-        {
-            keyMovimentation = keyMovimentation + 1;
-            arr[k] = L[i];
-            i++;
-        }
-        else
-        {
-            keyMovimentation = keyMovimentation + 1;
-            arr[k] = R[j];
-            j++;
-        }
-        k++;
-    }
-
-    delete[] L;
-    delete[] R;
-}
-
-void mergeSort(vector<Registro> &arr, int l, int r, int &keyComparation, int &keyMovimentation)
-{
-    if (l < r)
-    {
-        int m = l + (r - l) / 2;
-        mergeSort(arr, l, m, keyComparation, keyMovimentation);
-        mergeSort(arr, m + 1, r, keyComparation, keyMovimentation);
-        keyComparation = keyComparation + 1;
-        if (arr[m + 1].getCases() < arr[m].getCases())
-        {
-            merge(arr, l, m, r, keyComparation, keyMovimentation);
-        }
-    }
-}
-
-void quickSortMediana(vector<Registro> &registrosOrdenados, int inicio, int fim)
-{
-    int i = inicio;
-    int j = fim - 1;
-
-    Registro pivo = registrosOrdenados[(inicio + fim) / 2];
-
-    while (i <= j)
-    {
-        while (menorElemento(registrosOrdenados[i], pivo) && i < fim)
-        {
-            i++;
-        }
-
-        while (menorElemento(pivo, registrosOrdenados[j]) && j > inicio)
-        {
-            j--;
-        }
-        if (i <= j)
-        {
-            swap(registrosOrdenados[i], registrosOrdenados[j]);
-            i++;
-            j--;
-        }
-    }
-    if (j > inicio)
-    {
-        quickSortMediana(registrosOrdenados, inicio, j + 1);
-    }
-    if (i < fim)
-    {
-        quickSortMediana(registrosOrdenados, i, fim);
-    }
-}
-
-void quickSortCases(vector<Registro> &registrosOrdenados, int inicio, int fim, int &keyComparation, int &keyMovimentation)
-{
-    int i = inicio;
-    int j = fim - 1;
-
-    Registro pivo = registrosOrdenados[(inicio + fim) / 2];
-
-    while (i <= j)
-    {
-        keyComparation = keyComparation + 1;
-        while ((registrosOrdenados[i].getCases() < pivo.getCases()) && i < fim)
-        {
-            keyComparation = keyComparation + 1;
-            i++;
-        }
-
-        keyComparation = keyComparation + 1;
-        while ((registrosOrdenados[j].getCases() > pivo.getCases()) && j > inicio)
-        {
-            keyComparation = keyComparation + 1;
-            j--;
-        }
-        if (i <= j)
-        {
-            keyMovimentation = keyMovimentation + 1;
-            swap(registrosOrdenados[i], registrosOrdenados[j]);
-            i++;
-            j--;
-        }
-    }
-    if (j > inicio)
-    {
-        quickSortCases(registrosOrdenados, inicio, j + 1, keyComparation,keyMovimentation);
-    }
-    if (i < fim)
-    {
-        quickSortCases(registrosOrdenados, i, fim, keyComparation,keyMovimentation);
-    }
-}
-
-void salvarArquivo(vector<Registro> &registros)
-{
-    ofstream saida("brazil_covid19_cities_processado.csv");
-    int cases = 10000;
-    saida << "date,state,name,code,cases,deaths" << endl;
-    for (int i = 0; i < registros.size(); i++)
-    {
-        if (registros[i].getDate() == "2020-03-27")
-        {
-            cases = registros[i].getCases();
-        }
-        else
-        {
-            int aux = cases;
-            cases = registros[i].getCases();
-            registros[i].setCases(registros[i].getCases() - aux);
-        }
-        saida << registros[i].getDate() << ",";
-        saida << registros[i].getState() << ",";
-        saida << registros[i].getName() << ",";
-        saida << registros[i].getCode() << ",";
-        saida << registros[i].getCases() << ",";
-        saida << registros[i].getDeaths() << endl;
-    }
 }
 
 struct No
@@ -312,6 +85,67 @@ void treeSort(vector<Registro> &arr, int n)
     armazenaOrdenado(root, arr, i);
 }
 
+void removeAccents(string &str)
+{
+    string accent_chars = "ÁÀÃÂÇáàãâçÉÊéêÍíÑÓÔÕñóôõÚÜúü";
+    string unnacent_chars = "AAAAAAAACCaaaaaaaaccEEEEeeeeIIiiNNOOOOOOnnooooooUUUUuuuu";
+    for (int j = 0; str[j] != *"\0"; j++)
+    {
+        for (int i = 0; i < accent_chars.size(); i = i + 1)
+        {
+            if (str[j] == accent_chars[i])
+            {
+                if (str[j + 1] == accent_chars[i + 1])
+                {
+                    str[j] = unnacent_chars[i];
+                    if (str[j] == *"\0")
+                    {
+                        break;
+                    }
+                    str.erase(str.begin() + j + 1);
+                    break;
+                }
+                else
+                {
+                    i++;
+                }
+            }
+        }
+        if (str[j] == ' ' && (str[j + 1] >= 'a' && str[j + 1] <= 'z'))
+        {
+            str[j + 1] = str[j + 1] + 'A' - 'a';
+        }
+    }
+}
+
+
+
+void salvarArquivo(vector<Registro> &registros)
+{
+    ofstream saida("brazil_covid19_cities_processado.csv");
+    int cases = 10000;
+    saida << "date,state,name,code,cases,deaths" << endl;
+    for (int i = 0; i < registros.size(); i++)
+    {
+        if (registros[i].getDate() == "2020-03-27")
+        {
+            cases = registros[i].getCases();
+        }
+        else
+        {
+            int aux = cases;
+            cases = registros[i].getCases();
+            registros[i].setCases(registros[i].getCases() - aux);
+        }
+        saida << registros[i].getDate() << ",";
+        saida << registros[i].getState() << ",";
+        saida << registros[i].getName() << ",";
+        saida << registros[i].getCode() << ",";
+        saida << registros[i].getCases() << ",";
+        saida << registros[i].getDeaths() << endl;
+    }
+}
+
 void leArquivoNovamente(vector<Registro> &registros, ifstream &arq)
 {
     int m[] = {10000, 50000, 100000, 500000, 1000000};
@@ -345,6 +179,7 @@ void leArquivoNovamente(vector<Registro> &registros, ifstream &arq)
 
         vector<Registro> teste;
         vector<Registro> teste2;
+        Sorts sorts;
         int quickSortComparation = 0;
         int quickSortMovimentation = 0;
         int mergeSortComparation = 0;
@@ -361,7 +196,7 @@ void leArquivoNovamente(vector<Registro> &registros, ifstream &arq)
                 teste.push_back(registros[j]);
             }
             teste2 = teste;
-            quickSortCases(teste2, 0, teste2.size(), quickSortComparation, quickSortMovimentation);
+            sorts.quickSortCases(teste2, 0, teste2.size(), quickSortComparation, quickSortMovimentation);
             timeStop = clock();
             cout << "Tempo Gasto com o QuickSort: " << ((double)(timeStop - timeStart) / CLOCKS_PER_SEC) << endl;
             cout << "Comparacoes no QuickSort: " << quickSortComparation << endl;            
@@ -369,7 +204,7 @@ void leArquivoNovamente(vector<Registro> &registros, ifstream &arq)
 
             teste2 = teste;
             timeStart = clock();
-            mergeSort(teste, 0, teste.size() - 1, mergeSortComparation, mergeSortMovimentation);
+            sorts.mergeSort(teste, 0, teste.size() - 1, mergeSortComparation, mergeSortMovimentation);
             timeStop = clock();
             cout << "Tempo Gasto com o mergeSort: " << ((double)(timeStop - timeStart) / CLOCKS_PER_SEC) << endl;
             cout << "Comparacoes no MergeSort: " << mergeSortComparation << endl;            
@@ -413,8 +248,9 @@ void leArquivoTextoGeral(vector<Registro> &registros, ifstream &arq)
         }
 
         clock_t timeStart, timeStop;
+        Sorts sorts;
         timeStart = clock();
-        quickSortMediana(registros, 0, registros.size());
+        sorts.quickSortMediana(registros, 0, registros.size());
         //quickSortCases(registros, 0, registros.size());
         //mergeSort(registros, 0, registros.size() - 1);
         //treeSort(registros, (registros.size()));
@@ -432,7 +268,6 @@ void leArquivoTextoGeral(vector<Registro> &registros, ifstream &arq)
 
 int main(int argc, char const *argv[])
 {
-
     vector<Registro> registros;
     ifstream arq;
     arq.open(argv[1], ios::in);
