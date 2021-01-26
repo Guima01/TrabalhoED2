@@ -19,6 +19,6 @@ class Sorts{
     bool menorElemento(Registro &candidatoInicio, Registro &candidatoFim);
     void merge(vector<Registro> &arr, int l, int m, int r, int &keyComparation, int &keyMovimentation);
     void mergeSort(vector<Registro> &arr, int l, int r, int &keyComparation, int &keyMovimentation);
-    void quickSortMediana(vector<Registro> &registrosOrdenados, int inicio, int fim);
+    void quickSort(vector<Registro> &registrosOrdenados, int inicio, int fim);
     void quickSortCases(vector<Registro> &registrosOrdenados, int inicio, int fim, int &keyComparation, int &keyMovimentation);
 };

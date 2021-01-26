@@ -1,0 +1,100 @@
+2020-06-15, PA, Santana Do Araguaia, 150670.0, -10, 3
+2020-08-01, MA, Paco Do Lumiar, 210750.0, -1, 76
+2020-04-24, MG, Piedade Dos Gerais, 315040.0, -1, 0
+2020-05-07, GO, Hidrolina, 520980.0, 0, 0
+2020-10-15, MG, Sao Sebastiao Do Maranhao, 316450.0, 0, 0
+2020-08-02, MG, Mirabela, 314200.0, 0, 1
+2020-06-07, MT, Conquista D'Oeste, 510336.0, 0, 0
+2020-04-18, MG, Congonhas, 311800.0, 0, 0
+2020-07-11, PB, Taperoa, 251650.0, 0, 2
+2020-05-31, PE, Lagoa Do Ouro, 260860.0, 0, 0
+2020-08-10, MG, Curral De Dentro, 312087.0, 0, 1
+2020-05-18, RS, Erval Grande, 430720.0, 0, 0
+2020-08-27, PE, Lagoa Dos Gatos, 260870.0, 0, 5
+2020-05-13, SC, Curitibanos, 420480.0, 0, 0
+2020-04-17, RN, Pedro Avelino, 240970.0, 0, 0
+2020-09-13, PA, Cachoeira Do Piria, 150195.0, 0, 3
+2020-06-05, MG, Fortuna De Minas, 312640.0, 0, 0
+2020-04-16, RO, Jaru, 110011.0, 0, 0
+2020-09-08, MG, Espirito Santo Do Dourado, 312440.0, 0, 3
+2020-10-18, MA, Pirapemas, 210880.0, 0, 3
+2020-09-08, MG, Itamarati De Minas, 313260.0, 0, 0
+2020-10-05, PR, Paraiso Do Norte, 411800.0, 0, 3
+2020-06-27, MT, Ponte Branca, 510670.0, 0, 1
+2020-06-10, MG, Rio Novo, 315540.0, 0, 0
+2020-05-26, SC, Nova Erechim, 421140.0, 0, 0
+2020-09-16, MG, Olhos-d'Agua, 314545.0, 0, 0
+2020-04-13, MG, Cachoeira De Pajeu, 310270.0, 0, 0
+2020-06-01, MG, Pedrinopolis, 314920.0, 0, 0
+2020-04-11, SE, Tomar Do Geru, 280750.0, 0, 0
+2020-08-15, MG, Nova Belem, 314467.0, 0, 0
+2020-12-04, PR, Miraselva, 411600.0, 0, 0
+2020-05-02, MG, Bras Pires, 310870.0, 0, 0
+2020-09-13, RS, Itatiba Do Sul, 431070.0, 0, 0
+2020-05-12, MG, Monsenhor Paulo, 314260.0, 0, 0
+2020-09-15, PB, Agua Branca, 250010.0, 0, 2
+2020-04-07, MT, Jaciara, 510480.0, 0, 0
+2020-10-25, PI, Sao Jose Do Peixe, 221010.0, 0, 0
+2020-03-30, SC, Sao Joao Do Itaperiu, 421635.0, 0, 0
+2020-08-11, RS, Arroio Do Padre, 430107.0, 0, 0
+2020-04-19, SP, Ipua, 352130.0, 0, 0
+2020-10-11, MG, Divinopolis, 312230.0, 0, 62
+2020-06-09, PE, Bodoco, 260200.0, 0, 0
+2020-06-05, SP, Bom Sucesso De Itarare, 350715.0, 0, 0
+2020-04-01, SP, Igarata, 352020.0, 0, 0
+2020-07-06, RN, Felipe Guerra, 240370.0, 0, 1
+2020-06-10, MT, Denise, 510345.0, 0, 0
+2020-07-30, RN, Bodo, 240165.0, 0, 0
+2020-06-06, SE, Nossa Senhora Da Gloria, 280450.0, 0, 1
+2020-10-05, RJ, Varre-Sai, 330615.0, 0, 2
+2020-10-05, PR, Guaraniacu, 410930.0, 0, 2
+2020-10-05, MG, Claudio, 311660.0, 0, 4
+2020-10-10, MG, Taparuba, 316805.0, 0, 1
+2020-03-28, MG, Padre Paraiso, 314630.0, 0, 0
+2020-07-20, TO, Nazare, 171430.0, 0, 2
+2020-10-06, SC, Bom Jesus, 420253.0, 0, 3
+2020-06-26, RS, Itati, 431065.0, 0, 0
+2020-10-01, MG, Campanario, 311080.0, 0, 0
+2020-09-06, MA, Serrano Do Maranhao, 211178.0, 0, 2
+2020-09-02, PI, Aroeiras Do Itaim, 220095.0, 0, 1
+2020-12-07, MG, Divinesia, 312190.0, 0, 2
+2020-10-04, MG, Sao Goncalo Do Sapucai, 316200.0, 0, 4
+2020-11-27, MA, Barao De Grajau, 210150.0, 0, 1
+2020-10-05, MT, Luciara, 510530.0, 0, 0
+2020-09-06, PI, Cabeceiras Do Piaui, 220205.0, 0, 3
+2020-05-18, PR, Santa Cecilia Do Pavao, 412320.0, 0, 0
+2020-05-13, CE, Horizonte, 230523.0, 1, 4
+2020-09-02, MG, Bom Jesus Da Penha, 310760.0, 1, 0
+2020-09-09, MA, Urbano Santos, 211260.0, 1, 14
+2020-11-02, PB, Aroeiras, 250130.0, 1, 1
+2020-11-27, PB, Curral De Cima, 250527.0, 1, 2
+2020-09-15, AL, Flexeiras, 270280.0, 1, 7
+2020-07-21, RS, Vanini, 432255.0, 2, 0
+2020-09-19, RS, Sao Jose Do Hortencio, 431848.0, 2, 2
+2020-07-22, MG, Sao Joao Do Paraiso, 316270.0, 2, 0
+2020-11-19, BA, Itape, 291620.0, 2, 12
+2020-08-15, PA, Obidos, 150510.0, 2, 24
+2020-11-25, BA, Rio Real, 292700.0, 2, 19
+2020-09-11, ES, Santa Maria De Jetiba, 320455.0, 2, 10
+2020-07-29, RS, Barra Funda, 430195.0, 3, 0
+2020-07-15, PI, Sao Joao Do Piaui, 221000.0, 3, 1
+2020-09-19, BA, Lajedao, 291890.0, 3, 0
+2020-07-24, SP, Pardinho, 353610.0, 3, 1
+2020-08-27, AM, Santo Antonio Do Ica, 130370.0, 4, 23
+2020-07-07, TO, Esperantina, 170740.0, 4, 1
+2020-10-07, PR, Cornelio Procopio, 410640.0, 4, 21
+2020-11-03, BA, Mutuipe, 292240.0, 5, 7
+2020-08-30, MG, Simonesia, 316760.0, 6, 1
+2020-06-27, PE, Nazare Da Mata, 260950.0, 6, 19
+2020-08-25, PI, Santo Inacio Do Piaui, 220950.0, 6, 1
+2020-11-12, RJ, Silva Jardim, 330560.0, 7, 9
+2020-10-20, PE, Sao Lourenco Da Mata, 261370.0, 7, 133
+2020-08-06, PE, Cabo De Santo Agostinho, 260290.0, 12, 212
+2020-11-30, MT, Sorriso, 510792.0, 14, 110
+2020-09-04, PE, Bezerros, 260190.0, 19, 45
+2020-08-27, RJ, Barra Do Pirai, 330030.0, 21, 44
+2020-09-11, RJ, Cantagalo, 330110.0, 22, 2
+2020-06-24, MT, Pedra Preta, 510637.0, 23, 1
+2020-08-15, MA, Timon, 211220.0, 27, 99
+2020-05-24, RJ, Tres Rios, 330600.0, 67, 1
+2020-07-02, ES, Cariacica, 320130.0, 68, 244

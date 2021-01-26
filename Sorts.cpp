@@ -117,7 +117,7 @@ void Sorts::mergeSort(vector<Registro> &arr, int l, int r, int &keyComparation, 
     }
 }
 
-void Sorts::quickSortMediana(vector<Registro> &registrosOrdenados, int inicio, int fim)
+void Sorts::quickSort(vector<Registro> &registrosOrdenados, int inicio, int fim)
 {
     int i = inicio;
     int j = fim - 1;
@@ -144,11 +144,11 @@ void Sorts::quickSortMediana(vector<Registro> &registrosOrdenados, int inicio, i
     }
     if (j > inicio)
     {
-        quickSortMediana(registrosOrdenados, inicio, j + 1);
+        quickSort(registrosOrdenados, inicio, j + 1);
     }
     if (i < fim)
     {
-        quickSortMediana(registrosOrdenados, i, fim);
+        quickSort(registrosOrdenados, i, fim);
     }
 }
 
