@@ -1,50 +1,100 @@
-Tempo médio gasto do quickSort com 10000 registros aleatórios: 0.0292
-Comparacoes médias gasto do quickSort com 10000 registros aleatórios : 141258
-Movimentacoes médias gastas do quickSort com 10000 registros aleatórios : 59926.8
-
-
-Tempo médio gasto do mergeSort com 10000 registros aleatórios: 0.0644
-Comparacoes médias gasto do mergeSort com 10000 registros aleatórios : 131055
-Movimentacoes médias gastas do mergeSort com 10000 registros aleatórios : 121056
-
-
-Tempo médio gasto do quickSort com 50000 registros aleatórios: 0.205
-Comparacoes médias gasto do quickSort com 50000 registros aleatórios : 1.11265e+006
-Movimentacoes médias gastas do quickSort com 50000 registros aleatórios : 477801
-
-
-Tempo médio gasto do mergeSort com 50000 registros aleatórios: 0.418
-Comparacoes médias gasto do mergeSort com 50000 registros aleatórios : 1.03156e+006
-Movimentacoes médias gastas do mergeSort com 50000 registros aleatórios : 961562
-
-
-Tempo médio gasto do quickSort com 100000 registros aleatórios: 0.5936
-Comparacoes médias gasto do quickSort com 100000 registros aleatórios : 3.82621e+006
-Movimentacoes médias gastas do quickSort com 100000 registros aleatórios : 1.66961e+006
-
-
-Tempo médio gasto do mergeSort com 100000 registros aleatórios: 1.1734
-Comparacoes médias gasto do mergeSort com 100000 registros aleatórios : 3.55927e+006
-Movimentacoes médias gastas do mergeSort com 100000 registros aleatórios : 3.32927e+006
-
-
-Tempo médio gasto do quickSort com 500000 registros aleatórios: 2.8622
-Comparacoes médias gasto do quickSort com 500000 registros aleatórios : 1.64745e+007
-Movimentacoes médias gastas do quickSort com 500000 registros aleatórios : 7.28881e+006
-
-
-Tempo médio gasto do mergeSort com 500000 registros aleatórios: 5.534
-Comparacoes médias gasto do mergeSort com 500000 registros aleatórios : 1.53839e+007
-Movimentacoes médias gastas do mergeSort com 500000 registros aleatórios : 1.44939e+007
-
-
-Tempo médio gasto do quickSort com 1000000 registros aleatórios: 7.6882
-Comparacoes médias gasto do quickSort com 1000000 registros aleatórios : 5.02282e+007
-Movimentacoes médias gastas do quickSort com 1000000 registros aleatórios : 2.22233e+007
-
-
-Tempo médio gasto do mergeSort com 1000000 registros aleatórios: 14.8168
-Comparacoes médias gasto do mergeSort com 1000000 registros aleatórios : 4.68218e+007
-Movimentacoes médias gastas do mergeSort com 1000000 registros aleatórios : 4.42719e+007
-
-
+2020-09-23, SC, Aguas Mornas, 420060.0, -1, 2
+2020-10-24, SP, Pinhalzinho, 353820.0, 0, 2
+2020-07-25, RN, Doutor Severiano, 240320.0, 0, 1
+2020-06-28, AL, Sao Jose Da Laje, 270830.0, 0, 2
+2020-11-24, SP, Bora, 350720.0, 0, 0
+2020-06-24, SC, Monte Carlo, 421105.0, 0, 0
+2020-05-09, BA, Alagoinhas, 290070.0, 0, 0
+2020-06-12, MG, Malacacheta, 313920.0, 0, 0
+2020-09-14, SC, Jardinopolis, 420895.0, 0, 0
+2020-04-30, PB, Araruna, 250100.0, 0, 0
+2020-09-22, SC, Dionisio Cerqueira, 420500.0, 0, 4
+2020-11-26, BA, Boa Nova, 290370.0, 0, 4
+2020-05-25, SP, Cananeia, 350990.0, 0, 2
+2020-11-12, PR, Guaraci, 410920.0, 0, 4
+2020-04-08, BA, Ipecaeta, 291380.0, 0, 0
+2020-11-13, GO, Mozarlandia, 521400.0, 0, 10
+2020-11-30, SP, Junqueiropolis, 352600.0, 0, 7
+2020-05-24, PR, Quarto Centenario, 412065.0, 0, 0
+2020-03-28, ES, Muniz Freire, 320370.0, 0, 0
+2020-03-27, PE, Itambe, 260765.0, 0, 0
+2020-11-03, MG, Itapeva, 313360.0, 0, 14
+2020-08-03, BA, Itaquara, 291670.0, 0, 0
+2020-11-25, AL, Monteiropolis, 270540.0, 0, 1
+2020-05-14, CE, Mauriti, 230810.0, 0, 2
+2020-05-05, SP, Itaporanga, 352280.0, 0, 0
+2020-04-25, MA, Fortaleza Dos Nogueiras, 210410.0, 0, 0
+2020-09-23, RS, Sao Miguel Das Missoes, 431915.0, 0, 1
+2020-10-12, TO, Almas, 170040.0, 0, 2
+2020-12-04, GO, Novo Brasil, 521520.0, 0, 0
+2020-11-27, PA, Xinguara, 150840.0, 0, 26
+2020-04-14, AL, Sao Jose Da Tapera, 270840.0, 0, 0
+2020-06-03, GO, Caldazinha, 520455.0, 0, 0
+2020-06-01, PI, Avelino Lopes, 220110.0, 0, 0
+2020-11-10, SP, Castilho, 351100.0, 0, 8
+2020-05-19, GO, Pires Do Rio, 521740.0, 0, 1
+2020-10-23, PR, Doutor Ulysses, 412863.0, 0, 1
+2020-10-15, SP, Alvares Machado, 350130.0, 0, 8
+2020-06-12, MS, Inocencia, 500440.0, 0, 0
+2020-07-31, PE, Vertentes, 261620.0, 0, 3
+2020-04-05, RJ, Mendes, 330280.0, 0, 0
+2020-10-23, GO, Itaruma, 521130.0, 0, 3
+2020-10-17, MG, Cassia, 311510.0, 0, 4
+2020-09-22, SP, Bom Sucesso De Itarare, 350715.0, 0, 0
+2020-10-04, BA, Caturama, 290755.0, 0, 0
+2020-06-24, PR, Virmond, 412865.0, 0, 0
+2020-06-15, SP, Ribeirao Grande, 354325.0, 0, 0
+2020-09-11, SC, Presidente Getulio, 421400.0, 0, 4
+2020-09-01, RS, Coqueiros Do Sul, 430585.0, 0, 2
+2020-11-01, SP, Jarinu, 352520.0, 0, 24
+2020-05-04, MG, Bertopolis, 310660.0, 0, 0
+2020-05-23, SC, Bom Jesus, 420253.0, 0, 0
+2020-08-23, MG, Corrego Novo, 312000.0, 0, 0
+2020-06-01, BA, Lajedao, 291890.0, 0, 0
+2020-03-28, SP, Cabralia Paulista, 350830.0, 0, 0
+2020-11-13, PB, Alcantil, 250053.0, 0, 0
+2020-08-18, PI, Jacobina Do Piaui, 220515.0, 0, 0
+2020-11-28, MG, Santo Antonio Do Retiro, 316045.0, 0, 1
+2020-03-28, RS, Novo Machado, 431342.0, 0, 0
+2020-04-22, SP, Macaubal, 352810.0, 0, 0
+2020-09-07, PB, Itapororoca, 250710.0, 0, 9
+2020-03-28, AL, Mar Vermelho, 270490.0, 0, 0
+2020-12-05, PA, Igarape-Acu, 150320.0, 0, 27
+2020-10-28, SE, Araua, 280040.0, 0, 9
+2020-03-29, MG, Chapada Gaucha, 311615.0, 0, 0
+2020-07-09, RN, Lagoa Salgada, 240660.0, 0, 0
+2020-05-04, MG, Morro Do Pilar, 314370.0, 0, 0
+2020-11-07, SP, Paraiso, 353570.0, 0, 4
+2020-08-21, BA, Itambe, 291580.0, 0, 3
+2020-09-27, RS, Sao Sebastiao Do Cai, 431950.0, 0, 6
+2020-06-28, AL, Junqueiro, 270400.0, 1, 6
+2020-10-07, RN, Jardim De Piranhas, 240560.0, 1, 14
+2020-10-15, GO, Caiaponia, 520440.0, 1, 2
+2020-06-16, BA, Muquem Do Sao Francisco, 292225.0, 1, 0
+2020-04-08, RS, Farroupilha, 430790.0, 1, 0
+2020-07-20, BA, Olindina, 292310.0, 1, 0
+2020-05-01, PB, Serra Redonda, 251580.0, 1, 0
+2020-11-30, SC, Monte Castelo, 421110.0, 1, 3
+2020-09-04, PB, Conde, 250460.0, 1, 13
+2020-04-25, ES, Venda Nova Do Imigrante, 320506.0, 1, 0
+2020-09-15, PB, Riachao, 251274.0, 1, 2
+2020-11-14, PR, Tamboara, 412670.0, 1, 1
+2020-10-16, BA, Buritirama, 290475.0, 2, 5
+2020-04-13, ES, Aracruz, 320060.0, 2, 0
+2020-11-02, RN, Nisia Floresta, 240820.0, 2, 8
+2020-05-11, MG, Barbacena, 310560.0, 2, 2
+2020-09-02, PB, Teixeira, 251670.0, 2, 5
+2020-07-07, ES, Sao Roque Do Canaa, 320495.0, 2, 4
+2020-10-10, MG, Perdizes, 314980.0, 2, 4
+2020-07-29, RS, Barra Funda, 430195.0, 3, 0
+2020-09-03, RN, Sao Tome, 241290.0, 3, 3
+2020-07-19, BA, Casa Nova, 290720.0, 8, 5
+2020-09-09, RN, Goianinha, 240420.0, 8, 7
+2020-07-21, SP, Marilia, 352900.0, 11, 18
+2020-09-04, CE, Paraipaba, 231025.0, 12, 31
+2020-09-29, MG, Nova Lima, 314480.0, 58, 35
+2020-10-06, RR, Boa Vista, 140010.0, 76, 485
+2020-09-05, PR, Londrina, 411370.0, 113, 173
+2020-06-12, MA, Davinopolis, 210375.0, 156, 4
+2020-06-21, PA, Maraba, 150420.0, 175, 125
+2020-09-29, RJ, Rio De Janeiro, 330455.0, 183, 10926
