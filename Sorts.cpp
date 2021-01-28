@@ -191,3 +191,26 @@ void Sorts::quickSortCases(vector<Registro> &registrosOrdenados, int inicio, int
         quickSortCases(registrosOrdenados, i, fim, keyComparation, keyMovimentation);
     }
 }
+
+void Sorts::shellSort(vector<Registro> &arr, int n, int &keyComparation, int &keyMovimentation) 
+{ 
+    for (int gap = n/2; gap > 0; gap /= 2) 
+    {  
+        for (int i = gap; i < n; i += 1) 
+        { 
+            Registro temp = arr[i]; 
+
+            int j;          
+            
+            keyComparation++;
+            for (j = i; j >= gap && arr[j - gap].getCases() > temp.getCases(); j -= gap)
+            {
+                keyComparation++;
+                keyMovimentation++;
+                arr[j] = arr[j - gap]; 
+            } 
+            keyMovimentation++; 
+            arr[j] = temp; 
+        } 
+    } 
+} 

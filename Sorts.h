@@ -11,7 +11,6 @@
 
 class Sorts{
 
-
     public:
 
     Sorts();
@@ -21,4 +20,6 @@ class Sorts{
     void mergeSort(vector<Registro> &arr, int l, int r, int &keyComparation, int &keyMovimentation);
     void quickSort(vector<Registro> &registrosOrdenados, int inicio, int fim);
     void quickSortCases(vector<Registro> &registrosOrdenados, int inicio, int fim, int &keyComparation, int &keyMovimentation);
+    void shellSort(vector<Registro> &arr, int n, int &keyComparation, int &keyMovimentation);
+
 };

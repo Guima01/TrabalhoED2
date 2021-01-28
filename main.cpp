@@ -156,7 +156,6 @@ void analiseAlgoritmosOrdenacao(vector<Registro> &registros, string nomeAlgoritm
     float comparationMedia = 0;
     double timeMedia = 0;
     vector<Registro> teste;
-    vector<Registro> teste2;
     Sorts sorts;
 
     for (int i = 0; i < 5; i++)
@@ -172,9 +171,8 @@ void analiseAlgoritmosOrdenacao(vector<Registro> &registros, string nomeAlgoritm
                 
                 if( nomeAlgoritmo == "quickSort")
                 {
-                    teste2 = teste;
                     timeStart = clock();
-                    sorts.quickSortCases(teste2, 0, teste2.size(), comparation[k], movimentation[k]);
+                    sorts.quickSortCases(teste, 0, teste.size(), comparation[k], movimentation[k]);
                     timeStop = clock();
 
                     time[k] = ((double)(timeStop - timeStart) / CLOCKS_PER_SEC);
@@ -186,7 +184,6 @@ void analiseAlgoritmosOrdenacao(vector<Registro> &registros, string nomeAlgoritm
 
                 if( nomeAlgoritmo == "mergeSort")
                 {
-                    teste2 = teste;
                     timeStart = clock();
                     sorts.mergeSort(teste, 0, teste.size() - 1, comparation[k], movimentation[k]);
                     timeStop = clock();
@@ -196,6 +193,20 @@ void analiseAlgoritmosOrdenacao(vector<Registro> &registros, string nomeAlgoritm
                     movimentationMedia += movimentation[k];
                     comparationMedia += comparation[k];
                 }
+
+                if( nomeAlgoritmo == "shellSort")
+                {
+                    timeStart = clock();
+                    sorts.shellSort(teste, teste.size() - 1, comparation[k], movimentation[k]);
+                    timeStop = clock();
+
+                    time[k] = ((double)(timeStop - timeStart) / CLOCKS_PER_SEC);
+                    timeMedia += time[k];
+                    movimentationMedia += movimentation[k];
+                    comparationMedia += comparation[k];
+
+                }
+
                 teste.clear();
 
                 comparation[k] = 0;
@@ -248,6 +259,7 @@ void leArquivoNovamente(vector<Registro> &registros, ifstream &arq)
         cout << "Gerando arquivo de analise de dados ..." << endl;
         analiseAlgoritmosOrdenacao(registros,"quickSort",saida);
         analiseAlgoritmosOrdenacao(registros,"mergeSort",saida);
+        analiseAlgoritmosOrdenacao(registros,"shellSort",saida);
 
     }
     else
@@ -303,13 +315,14 @@ void moduloTeste(vector<Registro> &registros, ifstream &arq, int id)
         cout << "Escolha o algoritmo de ordenaçao" << endl;
         cout << "[1] QuickSort " << endl;
         cout << "[2] MergeSort " << endl;
+        cout << "[3] ShellSort " << endl;
         cout << "[0] Sair " << endl;
 
         do
         {
             cin >> identificaOrdenacao;
         }
-        while( identificaOrdenacao < 0 && identificaOrdenacao > 2 );
+        while( identificaOrdenacao < 0 && identificaOrdenacao > 3 );
         
         if (identificaOrdenacao == 1)
         {
@@ -319,6 +332,10 @@ void moduloTeste(vector<Registro> &registros, ifstream &arq, int id)
         else if (identificaOrdenacao == 2)
         {
             sorts.mergeSort(ordena, 0, ordena.size() - 1, comparation, movimentation);
+        }
+        else if (identificaOrdenacao == 3)
+        {
+            sorts.shellSort(ordena, ordena.size(), comparation, movimentation);
         }
         else if(identificaOrdenacao == 0)
         {
@@ -503,10 +520,12 @@ int main(int argc, char const *argv[])
     arq.open(argv[1], ios::in);
 
     leArquivoTextoGeral(registros, arq);
+    cout << "Salvando Arquivo..." << endl;
     salvarArquivo(registros);
     mainMenu();
 
     arq.open("brazil_covid19_cities_processado.csv", ios::in);
     leArquivoNovamente(registros, arq);
+
     return 0;
 }

@@ -1,50 +1,75 @@
-Tempo médio gasto do quickSort com 10000 registros aleatórios: 0.064766
-Comparacoes médias gasto do quickSort com 10000 registros aleatórios : 142252
-Movimentacoes médias gastas do quickSort com 10000 registros aleatórios : 59834.4
+Tempo médio gasto do quickSort com 10000 registros aleatórios: 0.0336
+Comparacoes médias gasto do quickSort com 10000 registros aleatórios : 141243
+Movimentacoes médias gastas do quickSort com 10000 registros aleatórios : 59705.6
 
 
-Tempo médio gasto do quickSort com 50000 registros aleatórios: 0.430665
-Comparacoes médias gasto do quickSort com 50000 registros aleatórios : 839818
-Movimentacoes médias gastas do quickSort com 50000 registros aleatórios : 367976
+Tempo médio gasto do quickSort com 50000 registros aleatórios: 0.2002
+Comparacoes médias gasto do quickSort com 50000 registros aleatórios : 835076
+Movimentacoes médias gastas do quickSort com 50000 registros aleatórios : 361783
 
 
-Tempo médio gasto do quickSort com 100000 registros aleatórios: 0.906836
-Comparacoes médias gasto do quickSort com 100000 registros aleatórios : 1.78606e+06
-Movimentacoes médias gastas do quickSort com 100000 registros aleatórios : 778135
+Tempo médio gasto do quickSort com 100000 registros aleatórios: 0.4404
+Comparacoes médias gasto do quickSort com 100000 registros aleatórios : 1.78563e+006
+Movimentacoes médias gastas do quickSort com 100000 registros aleatórios : 779827
 
 
-Tempo médio gasto do quickSort com 500000 registros aleatórios: 5.16906
-Comparacoes médias gasto do quickSort com 500000 registros aleatórios : 9.86173e+06
-Movimentacoes médias gastas do quickSort com 500000 registros aleatórios : 4.45918e+06
+Tempo médio gasto do quickSort com 500000 registros aleatórios: 2.512
+Comparacoes médias gasto do quickSort com 500000 registros aleatórios : 9.84488e+006
+Movimentacoes médias gastas do quickSort com 500000 registros aleatórios : 4.4221e+006
 
 
-Tempo médio gasto do quickSort com 1000000 registros aleatórios: 11.1817
-Comparacoes médias gasto do quickSort com 1000000 registros aleatórios : 2.13101e+07
-Movimentacoes médias gastas do quickSort com 1000000 registros aleatórios : 9.37647e+06
+Tempo médio gasto do quickSort com 1000000 registros aleatórios: 5.3464
+Comparacoes médias gasto do quickSort com 1000000 registros aleatórios : 2.10348e+007
+Movimentacoes médias gastas do quickSort com 1000000 registros aleatórios : 9.34115e+006
 
 
-Tempo médio gasto do mergeSort com 10000 registros aleatórios: 0.130016
-Comparacoes médias gasto do mergeSort com 10000 registros aleatórios : 130137
-Movimentacoes médias gastas do mergeSort com 10000 registros aleatórios : 120138
+Tempo médio gasto do mergeSort com 10000 registros aleatórios: 0.063
+Comparacoes médias gasto do mergeSort com 10000 registros aleatórios : 128774
+Movimentacoes médias gastas do mergeSort com 10000 registros aleatórios : 118775
 
 
-Tempo médio gasto do mergeSort com 50000 registros aleatórios: 0.761607
-Comparacoes médias gasto do mergeSort com 50000 registros aleatórios : 765412
-Movimentacoes médias gastas do mergeSort com 50000 registros aleatórios : 715413
+Tempo médio gasto do mergeSort com 50000 registros aleatórios: 0.3792
+Comparacoes médias gasto do mergeSort com 50000 registros aleatórios : 759353
+Movimentacoes médias gastas do mergeSort com 50000 registros aleatórios : 709354
 
 
-Tempo médio gasto do mergeSort com 100000 registros aleatórios: 1.45772
-Comparacoes médias gasto do mergeSort com 100000 registros aleatórios : 1.63045e+06
-Movimentacoes médias gastas do mergeSort com 100000 registros aleatórios : 1.53045e+06
+Tempo médio gasto do mergeSort com 100000 registros aleatórios: 0.8152
+Comparacoes médias gasto do mergeSort com 100000 registros aleatórios : 1.63072e+006
+Movimentacoes médias gastas do mergeSort com 100000 registros aleatórios : 1.53072e+006
 
 
-Tempo médio gasto do mergeSort com 500000 registros aleatórios: 8.5627
-Comparacoes médias gasto do mergeSort com 500000 registros aleatórios : 9.2867e+06
-Movimentacoes médias gastas do mergeSort com 500000 registros aleatórios : 8.7867e+06
+Tempo médio gasto do mergeSort com 500000 registros aleatórios: 4.7388
+Comparacoes médias gasto do mergeSort com 500000 registros aleatórios : 9.27503e+006
+Movimentacoes médias gastas do mergeSort com 500000 registros aleatórios : 8.77503e+006
 
 
-Tempo médio gasto do mergeSort com 1000000 registros aleatórios: 18.2355
-Comparacoes médias gasto do mergeSort com 1000000 registros aleatórios : 1.95733e+07
-Movimentacoes médias gastas do mergeSort com 1000000 registros aleatórios : 1.85733e+07
+Tempo médio gasto do mergeSort com 1000000 registros aleatórios: 10.8654
+Comparacoes médias gasto do mergeSort com 1000000 registros aleatórios : 1.95565e+007
+Movimentacoes médias gastas do mergeSort com 1000000 registros aleatórios : 1.85565e+007
+
+
+Tempo médio gasto do shellSort com 10000 registros aleatórios: 0.0432
+Comparacoes médias gasto do shellSort com 10000 registros aleatórios : 146762
+Movimentacoes médias gastas do shellSort com 10000 registros aleatórios : 146762
+
+
+Tempo médio gasto do shellSort com 50000 registros aleatórios: 0.255
+Comparacoes médias gasto do shellSort com 50000 registros aleatórios : 826164
+Movimentacoes médias gastas do shellSort com 50000 registros aleatórios : 826164
+
+
+Tempo médio gasto do shellSort com 100000 registros aleatórios: 0.5422
+Comparacoes médias gasto do shellSort com 100000 registros aleatórios : 1.74965e+006
+Movimentacoes médias gastas do shellSort com 100000 registros aleatórios : 1.74965e+006
+
+
+Tempo médio gasto do shellSort com 500000 registros aleatórios: 3.0874
+Comparacoes médias gasto do shellSort com 500000 registros aleatórios : 9.9893e+006
+Movimentacoes médias gastas do shellSort com 500000 registros aleatórios : 9.9893e+006
+
+
+Tempo médio gasto do shellSort com 1000000 registros aleatórios: 6.5266
+Comparacoes médias gasto do shellSort com 1000000 registros aleatórios : 2.1032e+007
+Movimentacoes médias gastas do shellSort com 1000000 registros aleatórios : 2.1032e+007
 
 
