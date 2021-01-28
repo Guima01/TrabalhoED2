@@ -15,6 +15,7 @@
 using namespace std;
 using namespace std::chrono;
 
+//particiona as strings by: Gabriel Bronte
 vector<string> split(const string &s, char delim)
 {
     vector<string> result;
@@ -27,64 +28,8 @@ vector<string> split(const string &s, char delim)
     }
     return result;
 }
-/*
-struct No
-{
-    Registro registro;
-    struct No *NoEsquerda, *NoDireita;
-};
 
-struct No *novoNo(Registro registro)
-{
-    struct No *temp = new No;
-    temp->registro = registro;
-    temp->NoEsquerda = temp->NoDireita = NULL;
-    return temp;
-}
-
-void armazenaOrdenado(No *root, vector<Registro> &arr, int &i)
-{
-    if (root != NULL)
-    {
-        armazenaOrdenado(root->NoEsquerda, arr, i);
-        arr[i++] = root->registro;
-        armazenaOrdenado(root->NoDireita, arr, i);
-    }
-}
-
-No *insereNo(No *no, Registro registro)
-{
-    // Se a árvore está vazia, retorna um novo nó 
-    if (no == NULL)
-        return novoNo(registro);
-
-    if (registro.getCases() < no->registro.getCases())
-    {
-        no->NoEsquerda = insereNo(no->NoEsquerda, registro);
-    }
-    else if (registro.getCases() > no->registro.getCases())
-    {
-        no->NoDireita = insereNo(no->NoDireita, registro);
-    }
-
-    return no;
-}
-
-void treeSort(vector<Registro> &arr, int n)
-{
-    struct No *root = NULL;
-
-    // Constrói a árvore
-    root = insereNo(root, arr[0]);
-    for (int i = 1; i < n; i++)
-    {
-        root = insereNo(root, arr[i]);
-    }
-
-    int i = 0;
-    armazenaOrdenado(root, arr, i);
-}
-*/
+//remove acentos by: Guilherme Marques
 void removeAccents(string &str)
 {
     string accent_chars = "ÁÀÃÂÇáàãâçÉÊéêÍíÑÓÔÕñóôõÚÜúü";
@@ -118,6 +63,7 @@ void removeAccents(string &str)
     }
 }
 
+//salva registros ordenados e altera para casos diários by: Guilherme Marques
 void salvarArquivo(vector<Registro> &registros)
 {
     ofstream saida("brazil_covid19_cities_processado.csv");
@@ -144,91 +90,90 @@ void salvarArquivo(vector<Registro> &registros)
     }
 }
 
-void analiseAlgoritmosOrdenacao(vector<Registro> &registros, string nomeAlgoritmo,ofstream &saida)
-{ 
+//analisa cada algoritmo by:Guilherme Marques, Gabriel Bronte, Matheus Rúbio
+void analiseAlgoritmosOrdenacao(vector<Registro> &registros, string nomeAlgoritmo, ofstream &saida)
+{
     clock_t timeStart, timeStop;
     int m[] = {10000, 50000, 100000, 500000, 1000000};
     int comparation[] = {0, 0, 0, 0, 0};
     int movimentation[] = {0, 0, 0, 0, 0};
     double time[] = {0.0, 0.0, 0.0, 0.0, 0.0};
-    
+
     float movimentationMedia = 0;
     float comparationMedia = 0;
     double timeMedia = 0;
-    vector<Registro> teste;
+    vector<Registro> vetor;
     Sorts sorts;
 
     for (int i = 0; i < 5; i++)
+    {
+        for (int k = 0; k < 5; k++)
         {
-            for (int k = 0; k < 5; k++)
+            random_shuffle(registros.begin(), registros.end());
+
+            for (int j = 0; j < m[i]; j++)
             {
-                random_shuffle(registros.begin(), registros.end());
-
-                for (int j = 0; j < m[i]; j++)
-                {
-                    teste.push_back(registros[j]);
-                }
-                
-                if( nomeAlgoritmo == "quickSort")
-                {
-                    timeStart = clock();
-                    sorts.quickSortCases(teste, 0, teste.size(), comparation[k], movimentation[k]);
-                    timeStop = clock();
-
-                    time[k] = ((double)(timeStop - timeStart) / CLOCKS_PER_SEC);
-                    timeMedia += time[k];
-                    movimentationMedia += movimentation[k];
-                    comparationMedia += comparation[k];
-
-                }
-
-                if( nomeAlgoritmo == "mergeSort")
-                {
-                    timeStart = clock();
-                    sorts.mergeSort(teste, 0, teste.size() - 1, comparation[k], movimentation[k]);
-                    timeStop = clock();
-
-                    time[k] = ((double)(timeStop - timeStart) / CLOCKS_PER_SEC);
-                    timeMedia += time[k];
-                    movimentationMedia += movimentation[k];
-                    comparationMedia += comparation[k];
-                }
-
-                if( nomeAlgoritmo == "shellSort")
-                {
-                    timeStart = clock();
-                    sorts.shellSort(teste, teste.size() - 1, comparation[k], movimentation[k]);
-                    timeStop = clock();
-
-                    time[k] = ((double)(timeStop - timeStart) / CLOCKS_PER_SEC);
-                    timeMedia += time[k];
-                    movimentationMedia += movimentation[k];
-                    comparationMedia += comparation[k];
-
-                }
-
-                teste.clear();
-
-                comparation[k] = 0;
-                movimentation[k] = 0;
-
+                vetor.push_back(registros[j]);
             }
 
-            saida << "Tempo médio gasto do " << nomeAlgoritmo << " com " << m[i] << " registros aleatórios: " << timeMedia / 5 << endl;
-            saida << "Comparacoes médias gasto do " << nomeAlgoritmo << " com " << m[i] << " registros aleatórios : " << comparationMedia / 5 << endl;
-            saida << "Movimentacoes médias gastas do " << nomeAlgoritmo << " com "<< m[i] << " registros aleatórios : " << movimentationMedia / 5 << endl
-                  << endl
-                  << endl;
+            if (nomeAlgoritmo == "quickSort")
+            {
+                timeStart = clock();
+                sorts.quickSortCases(vetor, 0, vetor.size(), comparation[k], movimentation[k]);
+                timeStop = clock();
 
-            movimentationMedia = 0;
-            comparationMedia = 0;
-            timeMedia = 0;
+                time[k] = ((double)(timeStop - timeStart) / CLOCKS_PER_SEC);
+                timeMedia += time[k];
+                movimentationMedia += movimentation[k];
+                comparationMedia += comparation[k];
+            }
+
+            if (nomeAlgoritmo == "mergeSort")
+            {
+                timeStart = clock();
+                sorts.mergeSort(vetor, 0, vetor.size() - 1, comparation[k], movimentation[k]);
+                timeStop = clock();
+
+                time[k] = ((double)(timeStop - timeStart) / CLOCKS_PER_SEC);
+                timeMedia += time[k];
+                movimentationMedia += movimentation[k];
+                comparationMedia += comparation[k];
+            }
+
+            if (nomeAlgoritmo == "shellSort")
+            {
+                timeStart = clock();
+                sorts.shellSort(vetor, vetor.size() - 1, comparation[k], movimentation[k]);
+                timeStop = clock();
+
+                time[k] = ((double)(timeStop - timeStart) / CLOCKS_PER_SEC);
+                timeMedia += time[k];
+                movimentationMedia += movimentation[k];
+                comparationMedia += comparation[k];
+            }
+
+            vetor.clear();
+
+            comparation[k] = 0;
+            movimentation[k] = 0;
         }
 
+        saida << "Tempo médio gasto do " << nomeAlgoritmo << " com " << m[i] << " registros aleatórios: " << timeMedia / 5 << endl;
+        saida << "Comparacoes médias gasto do " << nomeAlgoritmo << " com " << m[i] << " registros aleatórios : " << comparationMedia / 5 << endl;
+        saida << "Movimentacoes médias gastas do " << nomeAlgoritmo << " com " << m[i] << " registros aleatórios : " << movimentationMedia / 5 << endl
+              << endl
+              << endl;
+
+        movimentationMedia = 0;
+        comparationMedia = 0;
+        timeMedia = 0;
+    }
 }
 
-void leArquivoNovamente(vector<Registro> &registros, ifstream &arq)
+//faz novamente a leitura para cada algoritmo utilizando como chave de ordenação os casos by:Guilherme Marques, Gabriel Bronte, Matheus Rúbio  
+void leArquivoNovamente(ifstream &arq)
 {
+    vector<Registro> registros;
     if (arq.is_open())
     {
         string str;
@@ -257,22 +202,22 @@ void leArquivoNovamente(vector<Registro> &registros, ifstream &arq)
         }
         ofstream saida("saida.txt");
         cout << "Gerando arquivo de analise de dados ..." << endl;
-        analiseAlgoritmosOrdenacao(registros,"quickSort",saida);
-        analiseAlgoritmosOrdenacao(registros,"mergeSort",saida);
-        analiseAlgoritmosOrdenacao(registros,"shellSort",saida);
-
+        analiseAlgoritmosOrdenacao(registros, "quickSort", saida);
+        analiseAlgoritmosOrdenacao(registros, "mergeSort", saida);
+        analiseAlgoritmosOrdenacao(registros, "shellSort", saida);
     }
     else
         cerr << "ERRO: O arquivo nao pode ser aberto!" << endl;
 }
 
+//módulo de testes para verificar a funcionalidade correta de cada algoritmo by:Guilherme Marques, Gabriel Bronte, Matheus Rúbio  
 void moduloTeste(vector<Registro> &registros, ifstream &arq, int id)
 {
     if (arq.is_open())
     {
         string str;
         int cases, deaths;
-        cout<< "Lendo arquivo : brazil_covid19_cities_processado.csv ..." << endl;
+        cout << "Lendo arquivo : brazil_covid19_cities_processado.csv ..." << endl;
 
         for (int i = 0; getline(arq, str); i++)
         {
@@ -310,7 +255,7 @@ void moduloTeste(vector<Registro> &registros, ifstream &arq, int id)
             ordena.push_back(registros[j]);
         }
 
-        cout << endl ;
+        cout << endl;
 
         cout << "Escolha o algoritmo de ordenaçao" << endl;
         cout << "[1] QuickSort " << endl;
@@ -321,9 +266,8 @@ void moduloTeste(vector<Registro> &registros, ifstream &arq, int id)
         do
         {
             cin >> identificaOrdenacao;
-        }
-        while( identificaOrdenacao < 0 && identificaOrdenacao > 3 );
-        
+        } while (identificaOrdenacao < 0 && identificaOrdenacao > 3);
+
         if (identificaOrdenacao == 1)
         {
             sorts.quickSortCases(ordena, 0, ordena.size(), comparation, movimentation);
@@ -337,7 +281,7 @@ void moduloTeste(vector<Registro> &registros, ifstream &arq, int id)
         {
             sorts.shellSort(ordena, ordena.size(), comparation, movimentation);
         }
-        else if(identificaOrdenacao == 0)
+        else if (identificaOrdenacao == 0)
         {
             return;
         }
@@ -422,12 +366,12 @@ void leArquivoTextoGeral(vector<Registro> &registros, ifstream &arq)
         cout << endl
              << endl
              << endl;
-
     }
     else
         cerr << "ERRO: O arquivo nao pode ser aberto!" << endl;
 }
 
+//Menu para escolha das possíveis opções by: Gabriel Bronte
 int menu()
 {
     int selecao;
@@ -435,97 +379,89 @@ int menu()
     cout << "MENU" << endl;
     cout << "----" << endl;
     cout << "[1] Pre-processamento dos dados" << endl;
-    cout << "[2] Importar N registros aleatorios" << endl;
-    cout << "[0] Gerar analise dos algoritmos de ordenaçao" << endl;
+    cout << "[2] Modulo de testes" << endl;
+    cout << "[3] Gerar analise dos algoritmos de ordenacao" << endl;
+    cout << "[0] Sair" << endl;
 
     cin >> selecao;
 
     return selecao;
 }
 
-void seleciona(int selecao)
+void seleciona(int selecao, ifstream &arq)
 {
+    vector<Registro> registros;
     switch (selecao)
     {
-        case 1:
+    case 1:
+    {
+        leArquivoTextoGeral(registros, arq);
+        cout << "Salvando Arquivo..." << endl;
+        salvarArquivo(registros);
+        arq.close();
+        break;
+    }
+    case 2:
+    {
+        int id;
+        ifstream arquivo;
+
+        arquivo.open("brazil_covid19_cities_processado.csv", ios::in);
+        cout << endl;
+        cout << "------------------------------" << endl;
+
+        cout << "[1] Saida em console (N = 10)" << endl;
+        cout << "[2] Salvar a saida em arquivo (N = 100)" << endl;
+        cout << "[0] Sair" << endl;
+
+        do
         {
-            ifstream arquivo;
+            cin >> id;
+        } while (id < 0 && id > 2);
 
-            arquivo.open("brazil_covid19_cities_processado.csv", ios::in);
-            if (arquivo.is_open())
-            {
-                string str;
-
-                for (int i = 0; getline(arquivo, str); i++)
-                {
-                    cout << str << endl;
-                }
-            }
-            else
-                cerr << "ERRO: O arquivo nao pode ser aberto!" << endl;
-
-            break;
-        }
-        case 2:
+        if (id == 1)
         {
-            int id;
-            vector<Registro> registros;
-            ifstream arquivo;
-
-            arquivo.open("brazil_covid19_cities_processado.csv", ios::in);
-            cout << endl;
-            cout <<  "------------------------------" << endl;
-
-            cout << "[1] Saida em console" << endl;
-            cout << "[2] Salvar a saida em arquivo" << endl;
-            cout << "[0] Sair" << endl;
-            
-
-            do
-            {
-                cin >> id;
-            }
-            while( id < 0 && id > 2);
-
-            if (id == 1)
-            {
-                moduloTeste(registros, arquivo, 10);
-            }
-            else if (id == 2)
-            {
-                moduloTeste(registros, arquivo, 100);
-                cout << "Arquivo de saida salvado com sucesso" << endl << endl ;
-            }
-
-
-            break;
+            moduloTeste(registros, arquivo, 10);
         }
+        else if (id == 2)
+        {
+            moduloTeste(registros, arquivo, 100);
+            cout << "Arquivo de saida salvado com sucesso" << endl
+                 << endl;
+        }
+
+        break;
+    }
+
+    case 3:
+    {
+        ifstream arquivo;
+        arquivo.open("brazil_covid19_cities_processado.csv", ios::in);
+        leArquivoNovamente(arquivo);
+        arquivo.close();
+        break;
+    }
+
     }
 }
 
-void mainMenu()
+void mainMenu(ifstream &arq)
 {
     int selecao = menu();
     while (selecao != 0)
     {
-        seleciona(selecao);
+        seleciona(selecao, arq);
         selecao = menu();
     }
 }
 
+//Função principal
 int main(int argc, char const *argv[])
 {
-    vector<Registro> registros;
+    
     ifstream arq;
     arq.open(argv[1], ios::in);
-
-    leArquivoTextoGeral(registros, arq);
-    cout << "Salvando Arquivo..." << endl;
-    salvarArquivo(registros);
-    mainMenu();
-
-    arq.open("brazil_covid19_cities_processado.csv", ios::in);
-    leArquivoNovamente(registros, arq);
+    mainMenu(arq);
 
     return 0;
 }

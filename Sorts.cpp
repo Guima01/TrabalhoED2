@@ -23,6 +23,7 @@ Sorts::~Sorts()
 {
 }
 
+//função para retornar o menor elemento utilizando a chave do pré-processamento by: Gabriel Bronte
 bool Sorts::menorElemento(Registro &candidatoInicio, Registro &candidatoFim)
 {
     bool verificaState = (candidatoInicio.getState() == candidatoFim.getState());
@@ -63,6 +64,7 @@ bool Sorts::menorElemento(Registro &candidatoInicio, Registro &candidatoFim)
     return false;
 }
 
+//MergeSort para casos by: Guilherme Marques
 void Sorts::merge(vector<Registro> &arr, int l, int m, int r, int &keyComparation, int &keyMovimentation)
 {
     int i, j, k;
@@ -117,6 +119,7 @@ void Sorts::mergeSort(vector<Registro> &arr, int l, int r, int &keyComparation, 
     }
 }
 
+//QuickSort para o pré-processamento by: Gabriel Bronte
 void Sorts::quickSort(vector<Registro> &registrosOrdenados, int inicio, int fim)
 {
     int i = inicio;
@@ -152,6 +155,7 @@ void Sorts::quickSort(vector<Registro> &registrosOrdenados, int inicio, int fim)
     }
 }
 
+//QuickSort apenas para os casos by: Guilherme Marques, Gabriel Bronte
 void Sorts::quickSortCases(vector<Registro> &registrosOrdenados, int inicio, int fim, int &keyComparation, int &keyMovimentation)
 {
     int i = inicio;
@@ -192,6 +196,7 @@ void Sorts::quickSortCases(vector<Registro> &registrosOrdenados, int inicio, int
     }
 }
 
+//ShellSort apenas para casos by: Matheus Rúbio
 void Sorts::shellSort(vector<Registro> &arr, int n, int &keyComparation, int &keyMovimentation) 
 { 
     for (int gap = n/2; gap > 0; gap /= 2) 
