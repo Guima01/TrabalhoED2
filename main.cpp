@@ -63,6 +63,7 @@ void removeAccents(string &str)
     }
 }
 
+
 //Altera para casos diários by: Guilherme Marques
 void alteraCasos(vector<Registro> &registros)
 {
@@ -213,7 +214,7 @@ void leArquivoNovamente(ifstream &arq)
         cerr << "ERRO: O arquivo nao pode ser aberto!" << endl;
 }
 
-//Módulo de testes para verificar a funcionalidade correta de cada algoritmo by:todos
+//Algoritmos do módulo de teste by: todos
 void moduloTesteAlgoritmos(vector<Registro> &registros, ifstream &arq, int id)
 {
     if (arq.is_open())
@@ -341,6 +342,7 @@ void leArquivoTextoGeral(vector<Registro> &registros, ifstream &arq)
         cerr << "ERRO: O arquivo nao pode ser aberto!" << endl;
 }
 
+//Módulo de testes para verificar a funcionalidade correta de cada algoritmo by:todos
 void moduloTeste(vector<Registro> &registros, ifstream &arquivo)
 {
     int id;
