@@ -83,10 +83,8 @@ void alteraCasos(vector<Registro> &registros)
 }
 
 //salva registros ordenados e altera para casos diários by: todos
-void salvarArquivo(vector<Registro> &registros)
+void salvarArquivo(vector<Registro> &registros, ofstream &saida)
 {
-    alteraCasos(registros);
-    ofstream saida("brazil_covid19_cities_processado.csv");
     saida << "date,state,name,code,cases,deaths" << endl;
     for (int i = 0; i < registros.size(); i++)
     {
@@ -130,36 +128,26 @@ void analiseAlgoritmosOrdenacao(vector<Registro> &registros, string nomeAlgoritm
                 timeStart = clock();
                 sorts.quickSortCases(vetor, 0, vetor.size(), comparation[k], movimentation[k]);
                 timeStop = clock();
-
-                time[k] = ((double)(timeStop - timeStart) / CLOCKS_PER_SEC);
-                timeMedia += time[k];
-                movimentationMedia += movimentation[k];
-                comparationMedia += comparation[k];
             }
 
-            if (nomeAlgoritmo == "mergeSort")
+            else if (nomeAlgoritmo == "mergeSort")
             {
                 timeStart = clock();
                 sorts.mergeSort(vetor, 0, vetor.size() - 1, comparation[k], movimentation[k]);
                 timeStop = clock();
-
-                time[k] = ((double)(timeStop - timeStart) / CLOCKS_PER_SEC);
-                timeMedia += time[k];
-                movimentationMedia += movimentation[k];
-                comparationMedia += comparation[k];
             }
 
-            if (nomeAlgoritmo == "shellSort")
+            else if (nomeAlgoritmo == "shellSort")
             {
                 timeStart = clock();
                 sorts.shellSort(vetor, vetor.size() - 1, comparation[k], movimentation[k]);
                 timeStop = clock();
-
-                time[k] = ((double)(timeStop - timeStart) / CLOCKS_PER_SEC);
-                timeMedia += time[k];
-                movimentationMedia += movimentation[k];
-                comparationMedia += comparation[k];
             }
+
+            time[k] = ((double)(timeStop - timeStart) / CLOCKS_PER_SEC);
+            timeMedia += time[k];
+            movimentationMedia += movimentation[k];
+            comparationMedia += comparation[k];
 
             vetor.clear();
 
@@ -179,36 +167,42 @@ void analiseAlgoritmosOrdenacao(vector<Registro> &registros, string nomeAlgoritm
     }
 }
 
+//Leitura das linhas do arquivo
+void leLinha(vector<Registro> &registros, ifstream &arq)
+{
+
+    string str;
+    int cases, deaths;
+    for (int i = 0; getline(arq, str); i++)
+    {
+        if (i != 0)
+        {
+            Registro *registra = new Registro();
+
+            vector<string> stringDados = split(str, ',');
+
+            cases = atoi(stringDados[4].c_str());
+            deaths = atoi(stringDados[5].c_str());
+
+            registra->setDate(stringDados[0]);
+            registra->setState(stringDados[1]);
+            registra->setName(stringDados[2]);
+            registra->setCode(stringDados[3]);
+            registra->setCases(cases);
+            registra->setDeaths(deaths);
+
+            registros.push_back(*registra);
+        }
+    }
+}
+
 //Faz novamente a leitura para cada algoritmo utilizando como chave de ordenação os casos by:Guilherme Marques, Gabriel Bronte, Matheus Rúbio
 void leArquivoNovamente(ifstream &arq)
 {
     vector<Registro> registros;
     if (arq.is_open())
     {
-        string str;
-        int cases, deaths;
-
-        for (int i = 0; getline(arq, str); i++)
-        {
-            if (i != 0)
-            {
-                Registro *registra = new Registro();
-
-                vector<string> stringDados = split(str, ',');
-
-                cases = atoi(stringDados[4].c_str());
-                deaths = atoi(stringDados[5].c_str());
-
-                registra->setDate(stringDados[0]);
-                registra->setState(stringDados[1]);
-                registra->setName(stringDados[2]);
-                registra->setCode(stringDados[3]);
-                registra->setCases(cases);
-                registra->setDeaths(deaths);
-
-                registros.push_back(*registra);
-            }
-        }
+        leLinha(registros, arq);
         ofstream saida("saida.txt");
         cout << "Gerando arquivo de analise de dados ..." << endl;
         analiseAlgoritmosOrdenacao(registros, "quickSort", saida);
@@ -220,35 +214,10 @@ void leArquivoNovamente(ifstream &arq)
 }
 
 //Módulo de testes para verificar a funcionalidade correta de cada algoritmo by:todos
-void moduloTeste(vector<Registro> &registros, ifstream &arq, int id)
+void moduloTesteAlgoritmos(vector<Registro> &registros, ifstream &arq, int id)
 {
     if (arq.is_open())
     {
-        string str;
-        int cases, deaths;
-        cout << "Lendo arquivo : brazil_covid19_cities_processado.csv ..." << endl;
-
-        for (int i = 0; getline(arq, str); i++)
-        {
-            if (i != 0)
-            {
-                Registro *registra = new Registro();
-
-                vector<string> stringDados = split(str, ',');
-
-                cases = atoi(stringDados[4].c_str());
-                deaths = atoi(stringDados[5].c_str());
-
-                registra->setDate(stringDados[0]);
-                registra->setState(stringDados[1]);
-                registra->setName(stringDados[2]);
-                registra->setCode(stringDados[3]);
-                registra->setCases(cases);
-                registra->setDeaths(deaths);
-
-                registros.push_back(*registra);
-            }
-        }
 
         vector<Registro> ordena;
 
@@ -266,7 +235,7 @@ void moduloTeste(vector<Registro> &registros, ifstream &arq, int id)
 
         cout << endl;
 
-        cout << "Escolha o algoritmo de ordenaçao" << endl;
+        cout << "Escolha o algoritmo de ordenacao" << endl;
         cout << "[1] QuickSort " << endl;
         cout << "[2] MergeSort " << endl;
         cout << "[3] ShellSort " << endl;
@@ -310,15 +279,8 @@ void moduloTeste(vector<Registro> &registros, ifstream &arq, int id)
         else if (id == 100)
         {
             ofstream saida("moduloTestes.txt");
-            for (int i = 0; i < ordena.size(); i++)
-            {
-                saida << ordena[i].getDate() << ", ";
-                saida << ordena[i].getState() << ", ";
-                saida << ordena[i].getName() << ", ";
-                saida << ordena[i].getCode() << ", ";
-                saida << ordena[i].getCases() << ", ";
-                saida << ordena[i].getDeaths() << endl;
-            }
+            salvarArquivo(ordena, saida);
+            cout << "Arquivo de saida salvado com sucesso" << endl<< endl;
         }
     }
     else
@@ -367,18 +329,37 @@ void leArquivoTextoGeral(vector<Registro> &registros, ifstream &arq)
         Sorts sorts;
         timeStart = clock();
         sorts.quickSort(registros, 0, registros.size());
-
         timeStop = clock();
         cout << "QuickSort executado com sucesso" << endl;
-        cout << "Tempo gasto do Quicksort para o arquivo de entrada: " << ((double)(timeStop - timeStart) / CLOCKS_PER_SEC);
-        cout << " seg" << endl;
-
+        cout << "Tempo gasto do Quicksort para o arquivo de entrada: " << ((double)(timeStop - timeStart) / CLOCKS_PER_SEC) << " seg" << endl;
+        ;
         cout << endl
              << endl
              << endl;
     }
     else
         cerr << "ERRO: O arquivo nao pode ser aberto!" << endl;
+}
+
+void moduloTeste(vector<Registro> &registros, ifstream &arquivo)
+{
+    int id;
+    do
+    {
+        cout << "------------------------------" << endl;
+        cout << "[1] Saida em console (N = 10)" << endl;
+        cout << "[2] Salvar a saida em arquivo (N = 100)" << endl;
+        cout << "[0] Sair" << endl;
+        cin >> id;
+        if (id == 1)
+        {
+            moduloTesteAlgoritmos(registros, arquivo, 10);
+        }
+        else if (id == 2)
+        {
+            moduloTesteAlgoritmos(registros, arquivo, 100);
+        }
+    } while (id != 0);
 }
 
 //Menu para escolha das possíveis opções by: todos
@@ -408,42 +389,23 @@ void seleciona(int selecao, ifstream &arq)
     {
         leArquivoTextoGeral(registros, arq);
         cout << "Salvando Arquivo..." << endl;
-        salvarArquivo(registros);
+        alteraCasos(registros);
+        ofstream saida("brazil_covid19_cities_processado.csv");
+        salvarArquivo(registros, saida);
         arq.close();
         break;
     }
     case 2:
     {
-        int id;
         ifstream arquivo;
-
         arquivo.open("brazil_covid19_cities_processado.csv", ios::in);
+        cout << "Lendo arquivo : brazil_covid19_cities_processado.csv ..." << endl;
+        leLinha(registros, arquivo);
         cout << endl;
-        cout << "------------------------------" << endl;
-
-        cout << "[1] Saida em console (N = 10)" << endl;
-        cout << "[2] Salvar a saida em arquivo (N = 100)" << endl;
-        cout << "[0] Sair" << endl;
-
-        do
-        {
-            cin >> id;
-        } while (id < 0 && id > 2);
-
-        if (id == 1)
-        {
-            moduloTeste(registros, arquivo, 10);
-        }
-        else if (id == 2)
-        {
-            moduloTeste(registros, arquivo, 100);
-            cout << "Arquivo de saida salvado com sucesso" << endl
-                 << endl;
-        }
+        moduloTeste(registros, arquivo);
 
         break;
     }
-
     case 3:
     {
         ifstream arquivo;
