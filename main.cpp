@@ -63,12 +63,10 @@ void removeAccents(string &str)
     }
 }
 
-//salva registros ordenados e altera para casos diários by: Guilherme Marques
-void salvarArquivo(vector<Registro> &registros)
+//Altera para casos diários by: Guilherme Marques
+void alteraCasos(vector<Registro> &registros)
 {
-    ofstream saida("brazil_covid19_cities_processado.csv");
     int cases = 10000;
-    saida << "date,state,name,code,cases,deaths" << endl;
     for (int i = 0; i < registros.size(); i++)
     {
         if (registros[i].getDate() == "2020-03-27")
@@ -81,6 +79,17 @@ void salvarArquivo(vector<Registro> &registros)
             cases = registros[i].getCases();
             registros[i].setCases(registros[i].getCases() - aux);
         }
+    }
+}
+
+//salva registros ordenados e altera para casos diários by: todos
+void salvarArquivo(vector<Registro> &registros)
+{
+    alteraCasos(registros);
+    ofstream saida("brazil_covid19_cities_processado.csv");
+    saida << "date,state,name,code,cases,deaths" << endl;
+    for (int i = 0; i < registros.size(); i++)
+    {
         saida << registros[i].getDate() << ",";
         saida << registros[i].getState() << ",";
         saida << registros[i].getName() << ",";
@@ -90,7 +99,7 @@ void salvarArquivo(vector<Registro> &registros)
     }
 }
 
-//analisa cada algoritmo by:Guilherme Marques, Gabriel Bronte, Matheus Rúbio
+//Analisa cada algoritmo by: todos
 void analiseAlgoritmosOrdenacao(vector<Registro> &registros, string nomeAlgoritmo, ofstream &saida)
 {
     clock_t timeStart, timeStop;
@@ -170,7 +179,7 @@ void analiseAlgoritmosOrdenacao(vector<Registro> &registros, string nomeAlgoritm
     }
 }
 
-//faz novamente a leitura para cada algoritmo utilizando como chave de ordenação os casos by:Guilherme Marques, Gabriel Bronte, Matheus Rúbio  
+//Faz novamente a leitura para cada algoritmo utilizando como chave de ordenação os casos by:Guilherme Marques, Gabriel Bronte, Matheus Rúbio
 void leArquivoNovamente(ifstream &arq)
 {
     vector<Registro> registros;
@@ -210,7 +219,7 @@ void leArquivoNovamente(ifstream &arq)
         cerr << "ERRO: O arquivo nao pode ser aberto!" << endl;
 }
 
-//módulo de testes para verificar a funcionalidade correta de cada algoritmo by:Guilherme Marques, Gabriel Bronte, Matheus Rúbio  
+//Módulo de testes para verificar a funcionalidade correta de cada algoritmo by:todos
 void moduloTeste(vector<Registro> &registros, ifstream &arq, int id)
 {
     if (arq.is_open())
@@ -316,6 +325,7 @@ void moduloTeste(vector<Registro> &registros, ifstream &arq, int id)
         cerr << "ERRO: O arquivo nao pode ser aberto!" << endl;
 }
 
+//Lê arquivo para fazer o pré-processamento dos dados by: todos
 void leArquivoTextoGeral(vector<Registro> &registros, ifstream &arq)
 {
     if (arq.is_open())
@@ -371,7 +381,7 @@ void leArquivoTextoGeral(vector<Registro> &registros, ifstream &arq)
         cerr << "ERRO: O arquivo nao pode ser aberto!" << endl;
 }
 
-//Menu para escolha das possíveis opções by: Gabriel Bronte
+//Menu para escolha das possíveis opções by: todos
 int menu()
 {
     int selecao;
@@ -388,6 +398,7 @@ int menu()
     return selecao;
 }
 
+//Parte do Menu by: todos
 void seleciona(int selecao, ifstream &arq)
 {
     vector<Registro> registros;
@@ -441,10 +452,10 @@ void seleciona(int selecao, ifstream &arq)
         arquivo.close();
         break;
     }
-
     }
 }
 
+//Menu
 void mainMenu(ifstream &arq)
 {
     int selecao = menu();
@@ -458,7 +469,7 @@ void mainMenu(ifstream &arq)
 //Função principal
 int main(int argc, char const *argv[])
 {
-    
+
     ifstream arq;
     arq.open(argv[1], ios::in);
     mainMenu(arq);

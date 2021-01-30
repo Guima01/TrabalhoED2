@@ -23,7 +23,7 @@ Sorts::~Sorts()
 {
 }
 
-//função para retornar o menor elemento utilizando a chave do pré-processamento by: Gabriel Bronte
+//Função para retornar o menor elemento utilizando a chave do pré-processamento by: Gabriel Bronte
 bool Sorts::menorElemento(Registro &candidatoInicio, Registro &candidatoFim)
 {
     bool verificaState = (candidatoInicio.getState() == candidatoFim.getState());
